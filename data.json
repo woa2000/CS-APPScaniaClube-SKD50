@@ -1,0 +1,639 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Teste da Silva",
+      "cpf": "05463943109",
+      "password": "123456",
+      "avatar_url": "https://github.com/aleucilima.png",
+      "email": "usuario@teste.com",
+      "birthDate": "16/04/1994",
+      "address": "Av. do Teste, 123",
+      "cep": "12345-678",
+      "phone": "(11) 99000-1123",
+      "activityHistory": [
+        {
+          "id": 1,
+          "activity": "Academia",
+          "date": "16/04/2019 16:30",
+          "training": [
+            {
+              "id": 1,
+              "name": "Abdominal",
+              "section": "3x15"
+            },
+            {
+              "id": 2,
+              "name": "Supino",
+              "section": "3x15"
+            },
+            {
+              "id": 3,
+              "name": "Leg",
+              "section": "3x15"
+            },
+            {
+              "id": 4,
+              "name": "Mesa Extensora",
+              "section": "3x15"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "activity": "Spinning",
+          "date": "17/04/2019 18:30",
+          "training": [
+            {
+              "id": 1,
+              "name": "Abdominal",
+              "section": "3x15"
+            },
+            {
+              "id": 2,
+              "name": "Supino",
+              "section": "3x15"
+            },
+            {
+              "id": 3,
+              "name": "Leg",
+              "section": "3x15"
+            },
+            {
+              "id": 4,
+              "name": "Mesa Extensora",
+              "section": "3x15"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "activity": "Yoga",
+          "date": "18/04/2019 18:30",
+          "training": [
+            {
+              "id": 1,
+              "name": "Abdominal",
+              "section": "3x15"
+            },
+            {
+              "id": 2,
+              "name": "Supino",
+              "section": "3x15"
+            },
+            {
+              "id": 3,
+              "name": "Leg",
+              "section": "3x15"
+            },
+            {
+              "id": 4,
+              "name": "Mesa Extensora",
+              "section": "3x15"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "activity": "Academia",
+          "date": "18/04/2019 19:30",
+          "training": [
+            {
+              "id": 1,
+              "name": "Abdominal",
+              "section": "3x15"
+            },
+            {
+              "id": 2,
+              "name": "Supino",
+              "section": "3x15"
+            },
+            {
+              "id": 3,
+              "name": "Leg",
+              "section": "3x15"
+            },
+            {
+              "id": 4,
+              "name": "Mesa Extensora",
+              "section": "3x15"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "activity": "Spinning",
+          "date": "18/04/2019 18:30",
+          "training": [
+            {
+              "id": 1,
+              "name": "Abdominal",
+              "section": "3x15"
+            },
+            {
+              "id": 2,
+              "name": "Supino",
+              "section": "3x15"
+            },
+            {
+              "id": 3,
+              "name": "Leg",
+              "section": "3x15"
+            },
+            {
+              "id": 4,
+              "name": "Mesa Extensora",
+              "section": "3x15"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "professionals": [
+    {
+      "id": 1,
+      "name": "João",
+      "avatar_url": "https://github.com/aleucilima.png",
+      "ocupation": "Cabeleleiro",
+      "serviceHours": [
+        {
+          "id": 1,
+          "hour": "08:00",
+          "available": true
+        },
+        {
+          "id": 2,
+          "hour": "08:30",
+          "available": true
+        },
+        {
+          "id": 3,
+          "hour": "09:00",
+          "available": true
+        },
+        {
+          "id": 4,
+          "hour": "09:30",
+          "available": true
+        },
+        {
+          "id": 5,
+          "hour": "10:00",
+          "available": true
+        },
+        {
+          "id": 6,
+          "hour": "10:30",
+          "available": true
+        },
+        {
+          "id": 7,
+          "hour": "11:00",
+          "available": true
+        },
+        {
+          "id": 8,
+          "hour": "11:30",
+          "available": true
+        },
+        {
+          "id": 9,
+          "hour": "12:00",
+          "available": true
+        },
+        {
+          "id": 10,
+          "hour": "12:30",
+          "available": true
+        },
+        {
+          "id": 11,
+          "hour": "13:00",
+          "available": true
+        },
+        {
+          "id": 12,
+          "hour": "13:30",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "João",
+      "avatar_url": "https://github.com/aleucilima.png",
+      "ocupation": "Manicure",
+      "serviceHours": [
+        {
+          "id": 1,
+          "hour": "08:00",
+          "available": true
+        },
+        {
+          "id": 2,
+          "hour": "08:30",
+          "available": true
+        },
+        {
+          "id": 3,
+          "hour": "09:00",
+          "available": true
+        },
+        {
+          "id": 4,
+          "hour": "09:30",
+          "available": true
+        },
+        {
+          "id": 5,
+          "hour": "10:00",
+          "available": true
+        },
+        {
+          "id": 6,
+          "hour": "10:30",
+          "available": true
+        },
+        {
+          "id": 7,
+          "hour": "11:00",
+          "available": true
+        },
+        {
+          "id": 8,
+          "hour": "11:30",
+          "available": true
+        },
+        {
+          "id": 9,
+          "hour": "12:00",
+          "available": true
+        },
+        {
+          "id": 10,
+          "hour": "12:30",
+          "available": true
+        },
+        {
+          "id": 11,
+          "hour": "13:00",
+          "available": true
+        },
+        {
+          "id": 12,
+          "hour": "13:30",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "João",
+      "avatar_url": "https://github.com/aleucilima.png",
+      "ocupation": "Podólogo",
+      "serviceHours": [
+        {
+          "id": 1,
+          "hour": "08:00",
+          "available": true
+        },
+        {
+          "id": 2,
+          "hour": "08:30",
+          "available": true
+        },
+        {
+          "id": 3,
+          "hour": "09:00",
+          "available": true
+        },
+        {
+          "id": 4,
+          "hour": "09:30",
+          "available": true
+        },
+        {
+          "id": 5,
+          "hour": "10:00",
+          "available": true
+        },
+        {
+          "id": 6,
+          "hour": "10:30",
+          "available": true
+        },
+        {
+          "id": 7,
+          "hour": "11:00",
+          "available": true
+        },
+        {
+          "id": 8,
+          "hour": "11:30",
+          "available": true
+        },
+        {
+          "id": 9,
+          "hour": "12:00",
+          "available": true
+        },
+        {
+          "id": 10,
+          "hour": "12:30",
+          "available": true
+        },
+        {
+          "id": 11,
+          "hour": "13:00",
+          "available": true
+        },
+        {
+          "id": 12,
+          "hour": "13:30",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "João",
+      "avatar_url": "https://github.com/aleucilima.png",
+      "ocupation": "Barbeiro",
+      "serviceHours": [
+        {
+          "id": 1,
+          "hour": "08:00",
+          "available": true
+        },
+        {
+          "id": 2,
+          "hour": "08:30",
+          "available": true
+        },
+        {
+          "id": 3,
+          "hour": "09:00",
+          "available": true
+        },
+        {
+          "id": 4,
+          "hour": "09:30",
+          "available": true
+        },
+        {
+          "id": 5,
+          "hour": "10:00",
+          "available": true
+        },
+        {
+          "id": 6,
+          "hour": "10:30",
+          "available": true
+        },
+        {
+          "id": 7,
+          "hour": "11:00",
+          "available": true
+        },
+        {
+          "id": 8,
+          "hour": "11:30",
+          "available": true
+        },
+        {
+          "id": 9,
+          "hour": "12:00",
+          "available": true
+        },
+        {
+          "id": 10,
+          "hour": "12:30",
+          "available": true
+        },
+        {
+          "id": 11,
+          "hour": "13:00",
+          "available": true
+        },
+        {
+          "id": 12,
+          "hour": "13:30",
+          "available": true
+        }
+      ]
+    }
+  ],
+  "categorys": [
+    {
+      "id": 1,
+      "name": "Atividades",
+      "urlImage": "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg",
+      "subcategorys": [
+        {
+          "id": 1,
+          "name": "Academia",
+          "urlImage": "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 2,
+          "name": "Spinning",
+          "urlImage": "https://images.pexels.com/photos/4162578/pexels-photo-4162578.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 3,
+          "name": "Alongamento",
+          "urlImage": "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 4,
+          "name": "Abdômen",
+          "urlImage": "https://images.pexels.com/photos/864091/pexels-photo-864091.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 5,
+          "name": "Yoga",
+          "urlImage": "https://images.pexels.com/photos/374101/pexels-photo-374101.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 6,
+          "name": "Zumba",
+          "urlImage": "https://images.pexels.com/photos/3775566/pexels-photo-3775566.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        }
+      ]      
+    },
+    {
+      "id": 2,
+      "name": "Quadras e Quiosques",
+      "urlImage": "https://images.pexels.com/photos/6642497/pexels-photo-6642497.jpeg",
+      "subcategorys": []
+    },
+    {
+      "id": 3,
+      "name": "Centro Estético",
+      "urlImage": "https://images.pexels.com/photos/3985329/pexels-photo-3985329.jpeg",
+      "subcategorys": [
+        {
+          "id": 1,
+          "name": "Cabelo",
+          "urlImage": "https://images.pexels.com/photos/3993466/pexels-photo-3993466.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 2,
+          "name": "Barba",
+          "urlImage": "https://images.pexels.com/photos/2076931/pexels-photo-2076931.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 3,
+          "name": "Manicure",
+          "urlImage": "https://images.pexels.com/photos/332046/pexels-photo-332046.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        },
+        {
+          "id": 4,
+          "name": "Podólogo",
+          "urlImage": "https://images.pexels.com/photos/5999078/pexels-photo-5999078.jpeg",
+          "icon": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "favorite": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Lanchonete",
+      "urlImage": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+      "subcategorys": [
+        {
+          "id": 1,
+          "name": "Hamburguer",
+          "urlImage": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+          "products": [
+            {
+              "id": 1,
+              "name": "Hamburguer",
+              "price": "R$ 15,00",
+              "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+              "urlImage": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+              "favorite": false
+            },
+            {
+              "id": 2,
+              "name": "Hamburguer",
+              "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+              "price": "R$ 15,00",
+              "urlImage": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+              "favorite": false
+            },
+            {
+              "id": 3,
+              "name": "Hamburguer",
+              "price": "R$ 15,00",
+              "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+              "urlImage": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+              "favorite": false
+            },
+            {
+              "id": 4,
+              "name": "Hamburguer",
+              "price": "R$ 15,00",
+              "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+              "urlImage": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+              "favorite": false
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Batata",
+          "urlImage": "https://images.pexels.com/photos/8165389/pexels-photo-8165389.jpeg",
+          "products": [
+            {
+              "id": 1,
+              "name": "Batata",
+              "price": "R$ 15,00",
+              "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+              "urlImage": "https://images.pexels.com/photos/8165389/pexels-photo-8165389.jpeg",
+              "favorite": false
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Cerveja",
+          "urlImage": "https://images.pexels.com/photos/3650616/pexels-photo-3650616.jpeg",
+          "products": [
+            {
+              "id": 1,
+              "name": "Cerveja",
+              "price": "R$ 15,00",
+              "urlImage": "https://images.pexels.com/photos/3650616/pexels-photo-3650616.jpeg"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Refrigerante",
+          "urlImage": "https://images.pexels.com/photos/2983100/pexels-photo-2983100.jpeg",
+          "products": [
+            {
+              "id": 1,
+              "name": "Refrigerante",
+              "price": "R$ 15,00",
+              "urlImage": "https://images.pexels.com/photos/2983100/pexels-photo-2983100.jpeg"
+            }
+          ]
+        }
+      ]
+    }
+    
+  ],
+  "events": [
+    {
+      "id": 1,
+      "name": "Eventos",
+      "events": [
+        {
+          "id": 1,
+          "title": "Passeio",
+          "subtitle": "Passeio de buggy",
+          "urlImage": "https://marazulreceptivo.com.br/wp-content/uploads/2020/02/Buggy-dunas-brancas.jpg.webp",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "date": "20/12/2021",
+          "vacancy": 10,
+          "priceAdult": "R$ 100,00",
+          "priceChild": "R$ 50,00",
+          "priceNotAssociate": "R$ 120,00"
+        },
+        {
+          "id": 2,
+          "title": "Praia",
+          "subtitle": "Praia de pesca",
+          "urlImage": "https://marazulreceptivo.com.br/wp-content/uploads/2020/02/Buggy-dunas-brancas.jpg.webp",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "date": "20/12/2021",
+          "vacancy": 10,
+          "priceAdult": "R$ 100,00",
+          "priceChild": "R$ 50,00",
+          "priceNotAssociate": "R$ 120,00"
+        }
+      ]
+    }
+  ]
+}
