@@ -13,7 +13,6 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './src/contexts/auth';
-import AppLoading from 'expo-app-loading'
 import { Routes } from './src/routes'
 import { useFonts } from 'expo-font'
 
@@ -34,11 +33,11 @@ export default function App() {
   })
   
   
-  if (!fontsLoaded) {
-    return (
-      <AppLoading />
-    )
-  }
+  // if (!fontsLoaded) {
+  //   return (
+  //     <AppLoading />
+  //   )
+  // }
   
   return (   
     <NavigationContainer>
