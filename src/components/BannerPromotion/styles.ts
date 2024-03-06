@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native"
+import { StyleSheet, Dimensions, Platform } from "react-native"
 import { theme } from "../../global/styles/theme"
 
 export const styles = StyleSheet.create({
@@ -7,15 +7,24 @@ export const styles = StyleSheet.create({
     },
     image: {
         width: Dimensions.get('window').width,
-        height: 297,
-        resizeMode: 'cover',
+        height: Dimensions.get('window').width / 2,
+        resizeMode: 'contain',
+        marginBottom: 100,
+        ...Platform.select({
+            ios: {
+                marginTop: 60,
+            },
+            android: {
+                marginTop: 0,
+            },
+          }),
     },
     content: {
         position: "absolute",
         alignItems: "center",
         flexDirection: "row",
         width: "100%",
-        height: 116,
+        height: 100,
         bottom: 0,
     },
     contentIcon: {
@@ -24,9 +33,10 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginLeft: 20,
         marginRight: 16,
-        borderRadius: 50,
-        width: 70,
-        height: 70,
+        borderRadius: 25,
+        width: 50,
+        height: 50,
+        resizeMode: 'cover',
     },
     buttonBack:{
         position: 'absolute',
@@ -36,7 +46,7 @@ export const styles = StyleSheet.create({
     title: {
         color: theme.colors.typographySnow,
         fontFamily: theme.fonts.roboto700,
-        fontSize: 21,
+        fontSize: 18,
         paddingRight: 20
     },
     line: {
@@ -48,12 +58,13 @@ export const styles = StyleSheet.create({
     subtitle: {
         color: theme.colors.typographySnow,
         fontFamily: theme.fonts.roboto300,
-        paddingRight: 150,
+        fontSize: 14,
+        paddingRight: 100,
     },
     date: {
         color: theme.colors.typographySnow,
         fontFamily: theme.fonts.roboto500,
-        paddingRight: 150
+        paddingRight: 100
     }
     
 })

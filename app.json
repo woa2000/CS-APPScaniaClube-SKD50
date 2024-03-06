@@ -11,7 +11,8 @@
       "backgroundColor": "#1F2C73"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/88d13d94-de13-4c1c-9c0a-9c3576500933"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -24,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": false,
+      "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.rasystem.appclubescania",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "O aplicativo precisa do acesso a sua biblioteca de fotos para que você possa alterar a foto de perfil ou enviar novos exames.",
@@ -49,6 +51,9 @@
       "eas": {
         "projectId": "88d13d94-de13-4c1c-9c0a-9c3576500933"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

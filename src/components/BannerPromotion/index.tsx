@@ -23,7 +23,7 @@ type Props = TouchableOpacityProps & {
 export function BannerPromotion({ 
   icon,
   defaultIcon = 'compass',
-  customIconSize = 70,
+  customIconSize = 50,
   urlImage, 
   title, 
   subtitle, 
@@ -35,6 +35,8 @@ export function BannerPromotion({
 	type FontAwesomeIconName = React.ComponentProps<typeof FontAwesome>['name']
 	let iconName: FontAwesomeIconName
 	iconName = (defaultIcon as FontAwesomeIconName)
+
+  console.log(urlImage);
 	
 	if (icon) {
 		const parts = icon.split(' ');
