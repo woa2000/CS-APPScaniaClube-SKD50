@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
                 marginTop: 60,
             },
             android: {
-                marginTop: 0,
+                marginTop: 45,
             },
           }),
     },
