@@ -22,6 +22,8 @@ interface User {
   celular: string | undefined,
   imgPerfil?: string | undefined,
   idioma?: string | undefined,
+  policyAccepted?: boolean | undefined,
+  dateAccepted?: string | undefined
 }
 
 interface HomeObj{
@@ -232,7 +234,8 @@ interface EventDetailProps {
   documentRequired: boolean,
   birthDateRequired: boolean,
   cellRequired: boolean,
-  eventsTicketTypes: EventsTicketTypesProps[] | undefined
+  eventsTicketTypes: EventsTicketTypesProps[] | undefined,
+  billingType: string
 }
 
 interface EventsTicketTypesProps {
@@ -263,6 +266,17 @@ interface OpeningHours {
   id: string,
   description: string,
   labelTime: string
+}
+
+interface MonitoringChieldren {
+  id: string,
+  name: string,
+  age: number,
+}
+
+interface ScheduleMonitoring {
+  id: string,
+  chieldrens: MonitoringChieldren[] | undefined
 }
 
 interface Contact {
@@ -409,5 +423,7 @@ export {
   PaymentModelResult,
   ExamsProps,
   ExamNeedActivityProps,
-  OperatingRule
+  OperatingRule,
+  MonitoringChieldren,
+  ScheduleMonitoring
 };

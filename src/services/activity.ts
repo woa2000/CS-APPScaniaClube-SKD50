@@ -6,7 +6,9 @@ import {
   ScheduleActivity, 
   ModelResult, 
   ActivitySchedule,
-  GraphicData
+  GraphicData,  
+  ScheduleMonitoring,
+  MonitoringChieldren
 } from '../interfaces/interfaces';
 import { Alert } from 'react-native';
 import { t } from 'i18next';
@@ -91,6 +93,41 @@ export function bookingActivity(id: string): Promise<ModelResult> {
       activityScheduleId: id
     }    
     api.post("Schedules/Create", data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {
+      const data = response.data as ModelResult;
+      resolve(
+        {
+          success: data.success,
+          modelResult: data.modelResult
+        }
+      )
+    })
+    .catch((err) => {
+      console.log('erro ->', err.response.data)
+      Alert.alert('', t(`${err.response?.data?.modelResult?.message[0].message as string}`))
+      const data = err.response.data as ModelResult;
+      resolve(
+        {
+          success: data.success,
+          modelResult: data.modelResult
+        }
+      )
+    });
+  })
+}
+
+
+export function bookingActivityMonitoring(id: string, childrens: MonitoringChieldren[]): Promise<ModelResult> {    
+  return new Promise(resolve => {   
+    const data = {
+      id: id,
+      chieldrens: childrens
+    }    
+    api.post("Schedules/CreateMonitoringChildren", data, {
       headers: {
         'Content-Type': 'application/json'
       }

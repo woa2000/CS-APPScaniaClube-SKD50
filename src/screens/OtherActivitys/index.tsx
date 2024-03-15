@@ -123,7 +123,7 @@ export function OtherActivitys() {
         ]}
       > */}
       <BannerActivity 
-        urlImage="https://scania-clube.azurewebsites.net/img/outras-atividades.jpg"
+        urlImage="https://scania-clube.azurewebsites.net/img/outras-atividades-2.jpg"
         title={t("Outras atividades")}
         defaultIcon={"puzzle-piece"}
         customIconSize={35}

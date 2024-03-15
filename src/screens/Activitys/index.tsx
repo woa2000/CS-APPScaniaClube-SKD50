@@ -60,67 +60,7 @@ export function Activitys() {
   }, [])
 
   return (
-    <ScrollView style={styles.container}>    
-      {/* <SkeletonContent
-        containerStyle={{ flex: 1, width: '100%', height: '100%' }}
-        animationDirection="horizontalRight"
-        isLoading={loading}
-        layout={[
-          { 
-            key: 'banner', 
-            width: Dimensions.get('window').width, 
-            height: 297, 
-            marginBottom: 20 
-          },
-          { 
-            key: 'titleAndButton', 
-            width: 180, 
-            height: 20,
-            marginHorizontal: 20, 
-            marginBottom: 20 
-          },
-          {
-            flexDirection: 'row',
-            marginHorizontal: 20,
-            marginBottom: 20,
-            children: [
-              {
-                width: 136,
-                height: 182,
-                marginRight: 20,
-                borderRadius: 10,
-              },
-              {
-                width: 136,
-                height: 182,
-                marginRight: 20,
-                borderRadius: 10,
-              },
-              {
-                width: 136,
-                height: 182,
-                marginRight: 20,
-                borderRadius: 10,
-              },
-            ]
-          },
-          {
-            key: 'searchBar',
-            width: '90%',
-            height: 56,
-            marginHorizontal: 20,
-            marginBottom: 20,
-          },
-          { 
-            key: 'card', 
-            width: '90%', 
-            height: 120, 
-            marginHorizontal: 20, 
-            marginBottom: 20, 
-            borderRadius: 10 
-          }
-        ]}
-      > */}
+    <ScrollView style={styles.container}>       
       <BannerActivity 
         urlImage="https://scania-clube.azurewebsites.net/img/atividades.jpg"
         title={t("Atividades")} 

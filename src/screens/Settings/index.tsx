@@ -95,7 +95,7 @@ export function Settings() {
      
       <Footer>
         <FooterText>
-          Version 1.1.8
+          Version 1.1.15
         </FooterText>
       </Footer>
 

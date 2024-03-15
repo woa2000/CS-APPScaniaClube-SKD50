@@ -72,6 +72,7 @@ export function EventDetail() {
   async function loadEvents(id: string) {
     try {
       const response = await eventService.getEvent(id)
+      
 
       setEvent(() => { 
         var newState = response as EventDetailProps
@@ -86,6 +87,9 @@ export function EventDetail() {
             description_EN: obj.ticketType?.description_EN
           })) as EventTicketTypesProps[]])
         }
+
+        console.log('Event ->');
+        console.log(newState);
 
         return newState
       })
@@ -139,56 +143,7 @@ export function EventDetail() {
   }, [eventTicketTypes])
 
   return (
-    <Container>
-      {/* <SkeletonContent
-        containerStyle={{ flex: 1, width: '100%', height: '100%' }}
-        animationDirection="horizontalRight"
-        isLoading={loading}
-        layout={[
-          {
-            key: 'banner',
-            width: Dimensions.get('window').width,
-            height: 297,
-            marginBottom: 20
-          },
-          {
-            key: 'titleAndButton',
-            width: 180,
-            height: 20,
-            marginHorizontal: 20,
-            marginBottom: 40
-          },
-          {
-            key: 'text 1',
-            width: '90%',
-            height: 20,
-            marginHorizontal: 20,
-            marginBottom: 8
-          },
-          {
-            key: 'text 2',
-            width: '90%',
-            height: 20,
-            marginHorizontal: 20,
-            marginBottom: 8
-          },
-          {
-            key: 'text 3',
-            width: '90%',
-            height: 20,
-            marginHorizontal: 20,
-            marginBottom: 60
-          },
-          {
-            key: 'button',
-            width: '90%',
-            height: 60,
-            marginHorizontal: 20,
-            marginBottom: 20,
-            borderRadius: 40
-          }
-        ]}
-      > */}
+    <Container> 
         <View key={event.id}>
           <BannerPromotion
             urlImage={fileServer + event.image}
@@ -239,9 +194,17 @@ export function EventDetail() {
                 {t("Total")}
               </Title>
               <Total>
-                {totalValue > 0 ? `R$ ${totalValue.toFixed(2)}` : t("GRATUITO")}
+                {totalValue > 0 ? `R$ ${totalValue.toFixed(2)}` : t("R$ 0,00")}
               </Total>
             </Group>
+            { 
+              event.billingType == 'Externa' ? (<Group>
+                <Title style={{ fontSize: 16, color: 'red' }}>
+                  Aviso: O valor do evento deverá ser pago diretamente ao Prestador
+                </Title>
+              </Group>) : ''
+            }
+            
 
             <ButtonStandard
               title={t("Eu quero")}

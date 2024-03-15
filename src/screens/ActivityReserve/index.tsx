@@ -36,7 +36,8 @@ import {
   Activity, 
   NavigationParams, 
   ScheduleDates, 
-  ScheduleActivity 
+  ScheduleActivity,
+  MonitoringChieldren 
 } from '../../interfaces/interfaces'
 
 import { AlertCustom } from '../../components/AlertCustom'
@@ -56,6 +57,9 @@ export function ActivityReserve() {
   const [alertTitle, setAlertTitle] = useState('')
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(true)
+
+  const [schedleChildren, setSchedleChildren] = useState([] as MonitoringChieldren[]);
+  
 
    const {t, i18n} = useTranslation();
   const tDynamic = useTrasnlactionDynamic;
@@ -100,14 +104,19 @@ export function ActivityReserve() {
     }
   }
 
-  async function handleCheckTerms(activityId: string, hoursId: string) {
+  async function handleCheckTerms(activityId: string, hoursId: string, monitoring: boolean) {
     await activityService.checkIfNeedsToAcceptRule(activityId, user?.id as string)
       .then((response) => {
         console.log('handleCheckTerms ->',response)
         if(response === true) {
           handleOpenAgreeTerms(user?.id as string, activityId)
         }else{
-          handleBooking(hoursId)
+          if(monitoring)
+          {
+            handleBookingMentoring(hoursId, schedleChildren)
+          } else {
+            handleBooking(hoursId)
+          }
         }
       })
   }
@@ -119,6 +128,26 @@ export function ActivityReserve() {
   async function handleBooking(id: string) {
     try{
       await activityService.bookingActivity(id).then((response) => {
+        if(response.success){
+          loadScheduleActivity(activity.id, selected).then((resolve) => {
+            setSchedulesActivity(resolve as ScheduleActivity[])
+          })
+          return true
+        }
+        else{
+          Alert.alert('', response.modelResult?.message[0].message as string)
+        }
+      })
+    }catch(error){
+      console.log(error)
+    }
+    return false
+  }
+
+  async function handleBookingMentoring(id: string, childrens: MonitoringChieldren[]) {
+    try{
+      console.log('handleBookingMentoring -> ', childrens)
+      await activityService.bookingActivityMonitoring(id, childrens).then((response) => {
         if(response.success){
           loadScheduleActivity(activity.id, selected).then((resolve) => {
             setSchedulesActivity(resolve as ScheduleActivity[])
@@ -171,6 +200,11 @@ export function ActivityReserve() {
 
     return false
   }
+
+  async function handleAddChildren (name: string, age: string){
+    const newItem = { id: schedleChildren.length + 1, name: name, age: age };
+    setSchedleChildren([...schedleChildren, newItem]);   
+  }
   
   useEffect(() => {
     const params = route.params as NavigationParams
@@ -185,50 +219,7 @@ export function ActivityReserve() {
   }, [])
   
   return (
-    <Container>
-      {/* <SkeletonContent
-        containerStyle={{ flex: 1, width: '100%', height: '100%' }}
-        animationDirection="horizontalRight"
-        isLoading={loading}
-        layout={[
-          { 
-            key: 'banner', 
-            width: Dimensions.get('window').width, 
-            height: 297, 
-            marginBottom: 10 
-          },
-          {
-            key: 'searchBar',
-            width: '100%',
-            height: 80,
-            marginBottom: 20,
-          },
-          { 
-            key: 'card', 
-            width: '90%', 
-            height: 80, 
-            marginHorizontal: 20, 
-            marginBottom: 20, 
-            borderRadius: 10 
-          },
-          { 
-            key: 'card2', 
-            width: '90%', 
-            height: 80, 
-            marginHorizontal: 20, 
-            marginBottom: 20, 
-            borderRadius: 10 
-          },
-          { 
-            key: 'card3', 
-            width: '90%', 
-            height: 80, 
-            marginHorizontal: 20, 
-            marginBottom: 20, 
-            borderRadius: 10 
-          }
-        ]}
-      > */}
+    <Container>      
         <ScrollView>
           <BannerActivity 
             icon={activity.icon}
@@ -278,9 +269,14 @@ export function ActivityReserve() {
                   hour={schedule.scheduleLabel}
                   vacancies={schedule.vacanciesLabel}
                   isScheduled={schedule.isScheduled}
+                  isMonitoring={activity.description.toUpperCase() == 'MONITORIA INFANTIL'}                  
                   buttonLoading={loading}
-                  handleBooking={() => handleCheckTerms(activity.id as string, schedule.id as string)}
+                  handleBooking={() => handleCheckTerms(activity.id as string, schedule.id as string, false)}
+                  handleBookingMentoring={() => handleCheckTerms(activity.id as string, schedule.id as string, true)}
                   handleCancel={() => handleCancel(schedule.sheduledId as string)}
+                  handleUpdateChildren={({name, age}) => {
+                    handleAddChildren(name, age)                    
+                  }}
                 />
               ))
               :

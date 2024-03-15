@@ -36,8 +36,7 @@ export function BannerPromotion({
 	let iconName: FontAwesomeIconName
 	iconName = (defaultIcon as FontAwesomeIconName)
 
-  console.log(urlImage);
-	
+  
 	if (icon) {
 		const parts = icon.split(' ');
 		if (parts.length > 1) {

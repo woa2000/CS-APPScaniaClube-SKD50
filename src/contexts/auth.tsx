@@ -54,16 +54,17 @@ export const AuthProvider: React.FC = ({children}) => {
             }
             setLoading(false);
         }
-
         loadStorage();
     }, [])
 
+   
     async function setAuthorization(token: string) {
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
     async function singIn(username: string, password: string) {
         const response = await auth.singInService(username, password);
+        console.log('Login -> ', response)
         if (!response.error) {
             setAuthorization(response.token as string).then(() => {
                 setUser(response.user);
@@ -72,8 +73,7 @@ export const AuthProvider: React.FC = ({children}) => {
                 AsyncStorage.setItem('@ClubeScania:token', JSON.stringify(response.token));
                 AsyncStorage.setItem('@ClubeScania:fileServer', JSON.stringify(response.fileServer));
 
-                updateLanguage(response.user?.idioma ?? 'pt');
-                
+                updateLanguage(response.user?.idioma ?? 'pt');                
             })
             
         } else {

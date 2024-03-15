@@ -28,6 +28,8 @@ export function  singInService(username : string, password: string): Promise<JWT
           celular : data.user?.celular,
           imgPerfil : data.user?.imgPerfil,
           idioma : data.user?.idioma,
+          policyAccepted: data.user?.policyAccepted,
+          dateAccepted: data.user?.dateAccepted
         },
         fileServer: data.fileServer,
         error: data.error

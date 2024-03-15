@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView, 
   Platform,
   Alert, 
+  Linking
 } from 'react-native'
 
 import { theme } from '../../global/styles/theme'
@@ -61,6 +62,12 @@ export function Profile() {
   const birthDay = moment(user?.dataNascimento).format('DD/MM/YYYY')
 
   const { t, i18n } = useTranslation()
+
+  const openLink = () => {
+    const url = 'http://scania-clube-homolog.azurewebsites.net/Privacy';
+    
+    Linking.openURL(url).catch(err => console.error('Erro ao abrir política de privacidade', err));
+  };
 
   async function handleSelectImage() {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -185,6 +192,11 @@ export function Profile() {
                 />
               </Form>
             </Content>
+
+           <ButtonStandard
+              title={t("Politíca de Privacidade")}
+              onPress={() => openLink()}
+           />
 
             <ButtonLogin
               title={t("Salvar")}

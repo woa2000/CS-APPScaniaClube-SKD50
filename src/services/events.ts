@@ -25,6 +25,7 @@ export function getEvent(id: string) : Promise<Event> {
     api.get('Events/GetEvent/' + id)
     .then((response) => {
       const data = response.data as Event;
+
       resolve(data)
     })
     .catch((err) => {

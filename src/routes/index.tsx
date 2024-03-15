@@ -6,10 +6,11 @@ import {useAuth} from '../contexts/auth'
 
 import { AuthRoutes } from './auth.routes'
 import { AppRoutes } from './app.routes'
+import { PrivacyRoutes } from './privacy.routes'
 
 
 export function Routes() {
-  const {signed, loading} = useAuth();
+  const {signed, loading, user} = useAuth();
 
   if(loading){
       return(
@@ -19,6 +20,7 @@ export function Routes() {
       );
   } 
 
-  return  signed ? <AppRoutes /> :  <AuthRoutes />
+//   return  signed ? <AppRoutes /> :  <AuthRoutes />
+return  signed ?  ( user?.policyAccepted == true ? <AppRoutes />  : <PrivacyRoutes /> ) :  <AuthRoutes />
   
 }
