@@ -1,0 +1,9 @@
+appId: com.scania.clube
+---
+- launchApp
+- tapOn: "CPF"
+- inputText: "00000000000"
+- tapOn: "Senha"
+- inputText: "12345678"
+- tapOn: "Entrar"
+- assertVisible: "Home"

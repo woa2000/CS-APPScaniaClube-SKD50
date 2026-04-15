@@ -1,0 +1,9 @@
+appId: com.scania.clube
+---
+- launchApp
+- assertVisible: "Espaços"
+- tapOn: "Espaços"
+- tapOn: "Agendadas"
+- tapOn: "Cancelar"
+- tapOn: "Confirmar"
+- assertVisible: "Histórico"

@@ -1,0 +1,10 @@
+appId: com.scania.clube
+---
+- launchApp
+- assertVisible: "Home"
+- tapOn: "Atividades"
+- tapOn:
+    text: "Atividades"
+    index: 0
+- tapOn: "Reservar"
+- assertVisible: "Sucesso"
