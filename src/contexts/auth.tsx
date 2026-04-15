@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as auth from '../services/auth';
-import api from '../services/api';
+import api, { configureAuthInterceptors } from '../services/api';
 import {User} from '../interfaces/interfaces';
 
 import { useTranslation } from 'react-i18next';
@@ -57,6 +57,30 @@ export const AuthProvider: React.FC = ({children}) => {
         loadStorage();
     }, [])
 
+    useEffect(() => {
+        configureAuthInterceptors({
+            getAccessToken: async () => {
+                const accessToken = await AsyncStorage.getItem('@ClubeScania:token');
+                return accessToken ? JSON.parse(accessToken) : null;
+            },
+            getRefreshToken: async () => {
+                const refreshToken = await AsyncStorage.getItem('@ClubeScania:refreshToken');
+                return refreshToken ? JSON.parse(refreshToken) : null;
+            },
+            onTokensUpdated: async (accessToken: string, refreshToken?: string | null) => {
+                await setAuthorization(accessToken);
+                await AsyncStorage.setItem('@ClubeScania:token', JSON.stringify(accessToken));
+
+                if (refreshToken) {
+                    await AsyncStorage.setItem('@ClubeScania:refreshToken', JSON.stringify(refreshToken));
+                }
+            },
+            onSessionExpired: async () => {
+                await clearSession();
+            }
+        });
+    }, []);
+
    
     async function setAuthorization(token: string) {
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -65,6 +89,7 @@ export const AuthProvider: React.FC = ({children}) => {
     async function clearSession() {
         await AsyncStorage.multiRemove([
             '@ClubeScania:token',
+            '@ClubeScania:refreshToken',
             '@ClubeScania:user',
             '@ClubeScania:fileServer'
         ]);
@@ -87,6 +112,10 @@ export const AuthProvider: React.FC = ({children}) => {
             await AsyncStorage.setItem('@ClubeScania:user', JSON.stringify(response.user));
             await AsyncStorage.setItem('@ClubeScania:token', JSON.stringify(response.token));
             await AsyncStorage.setItem('@ClubeScania:fileServer', JSON.stringify(response.fileServer));
+
+            if (response.refreshToken) {
+                await AsyncStorage.setItem('@ClubeScania:refreshToken', JSON.stringify(response.refreshToken));
+            }
 
             await updateLanguage(response.user?.idioma ?? 'pt');
             

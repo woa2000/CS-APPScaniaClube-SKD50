@@ -16,9 +16,14 @@ export function  singInService(username : string, password: string): Promise<JWT
     })
     .then((response) => {
       const data = response.data as JWT;
+      const refreshTokenData = response.data as {
+        refreshToken?: string | null,
+        refresh_token?: string | null
+      };
       console.log('jwt ->',  data);
       resolve({
         token : data.token,
+        refreshToken: refreshTokenData.refreshToken ?? refreshTokenData.refresh_token ?? null,
         user : {
           id: data.user?.id,
           nome : data.user?.nome,
@@ -43,6 +48,7 @@ export function  singInService(username : string, password: string): Promise<JWT
       Alert.alert('', handledMessage ?? t(`${apiMessage ?? fallbackMessage}`))
       resolve({
         token : null,
+        refreshToken: null,
         user: null,
         fileServer: null,
         error: err?.response?.data ?? handledMessage ?? fallbackMessage

@@ -8,6 +8,7 @@ interface NavigationParams {
 
 interface JWT {
   token: string | null,
+  refreshToken?: string | null,
   user: User | null,
   fileServer: string | null,
   error: string | null
