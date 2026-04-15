@@ -18,17 +18,18 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import { useTrasnlactionDynamic } from '../../languages/translateDB';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { trackError, trackEvent } from '../../services/telemetry'
 
 
 export function Reserves() {
   const { user } = useAuth()
+  const queryClient = useQueryClient()
   const [visible, setVisible] = useState(false)
   const [alertTitle, setAlertTitle] = useState('')
   const [itemCancel, setItemCancel] = useState('')
   const [alertMessage, setAlertMessage] = useState('') 
   const [optionSelected, setOptionSelected] = useState(true)
-  const [scheduleSpace, setScheduleSpaces] = useState<SpaceSchedule[]>([])
-  const [historicSpace, setHistoricSpaces] = useState<SpaceSchedule[]>([])
 
   const {t, i18n} = useTranslation();
   const tDynamic = useTrasnlactionDynamic;
@@ -41,22 +42,42 @@ export function Reserves() {
   async function handleLikeActivity() {
     return false
   }
+  const scheduledQuery = useQuery({
+    queryKey: ['reserves', 'scheduled', user?.id],
+    queryFn: () => spaceService.getScheduledUserSpace(user?.id as string),
+    enabled: Boolean(user?.id),
+    staleTime: 60 * 1000
+  })
 
-  async function getSpacesSchedule() {
-    const response = await spaceService.getScheduledUserSpace(user?.id as string)
-    setScheduleSpaces(response as SpaceSchedule[])
-  }
+  const historyQuery = useQuery({
+    queryKey: ['reserves', 'history', user?.id],
+    queryFn: () => spaceService.getRecordUserSchedulesSpace(user?.id as string),
+    enabled: Boolean(user?.id),
+    staleTime: 5 * 60 * 1000
+  })
 
-  async function getSpacesHistory() {
-    const response = await spaceService.getRecordUserSchedulesSpace(user?.id as string)
-    setHistoricSpaces(response as SpaceSchedule[])
-  }
+  const cancelReserveMutation = useMutation({
+    mutationFn: async (id: string) => spaceService.cancelBookingSpace(id),
+    onSuccess: response => {
+      if (response.success) {
+        queryClient.invalidateQueries({ queryKey: ['reserves', 'scheduled', user?.id] })
+        trackEvent('reserve_cancel_success', {
+          userId: user?.id
+        })
+      }
+    },
+    onError: error => {
+      trackError('reserve_cancel_error', {
+        message: String(error),
+        userId: user?.id
+      })
+    }
+  })
 
   async function handleCancel(id: string) {
     try{
-      await spaceService.cancelBookingSpace(id).then((response) => {
+      await cancelReserveMutation.mutateAsync(id).then((response) => {
         if(response.success){
-          getSpacesSchedule()
           return true
         }
         else {
@@ -77,9 +98,21 @@ export function Reserves() {
   }
 
   useEffect(() => {
-    getSpacesSchedule()
-    getSpacesHistory()
-  }, [])
+    if (scheduledQuery.error) {
+      trackError('reserves_scheduled_query_error', {
+        message: String(scheduledQuery.error)
+      })
+    }
+
+    if (historyQuery.error) {
+      trackError('reserves_history_query_error', {
+        message: String(historyQuery.error)
+      })
+    }
+  }, [scheduledQuery.error, historyQuery.error])
+
+  const scheduleSpace = (scheduledQuery.data as SpaceSchedule[]) ?? []
+  const historicSpace = (historyQuery.data as SpaceSchedule[]) ?? []
 
   return (
     <Container>

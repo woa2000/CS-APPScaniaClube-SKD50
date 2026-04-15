@@ -17,6 +17,8 @@ import { SeachBar } from '../../components/SeachBar'
 import { useAuth } from '../../contexts/auth'
 import { Card } from '../../components/Card'
 import { styles } from './styles'
+import { useQuery } from '@tanstack/react-query'
+import { trackError } from '../../services/telemetry'
 
 import { useTranslation } from 'react-i18next';
 import { useTrasnlactionDynamic } from '../../languages/translateDB';
@@ -24,11 +26,9 @@ import { useTrasnlactionDynamic } from '../../languages/translateDB';
 export function Activitys() {
   const route = useRoute()
   const navigation = useNavigation()
-  const [loading, setLoading] = useState(true)
   const [searchText, setSearchText] = useState('')
-  const {fileServer, setTitleHeader, titleHeader, user} = useAuth();
-  const [lastReservations, setLastReservations] = useState<Activity[]>({} as Activity[]);
-  const [activities, setActivities] = useState<Activity[]>({} as Activity[]);
+  const {fileServer, setTitleHeader, user} = useAuth();
+  const params = route.params as NavigationParams
 
   const {t, i18n} = useTranslation();
   const tDynamic = useTrasnlactionDynamic;
@@ -37,27 +37,32 @@ export function Activitys() {
     return tDynamic(pt, en, lang);
   };
 
-
-  async function loadActivities(type: string) {
-    try{
-      const response = await activityService.getActivityPage(user?.id as string, type);
-      setActivities(response.activities as Activity[]);
-      setLastReservations(response.lastReservations as Activity[]);
-    }catch(error){
-      console.log(error)
-    }
-  }
+  const activityPageQuery = useQuery({
+    queryKey: ['activity-page', user?.id, params?.type],
+    queryFn: () => activityService.getActivityPage(user?.id as string, params?.type ? params.type as string : ''),
+    enabled: Boolean(user?.id),
+    staleTime: 2 * 60 * 1000
+  })
 
   async function handleLikeActivity() {
     return false
   }
 
   useEffect(() => {
-    const params = route.params as NavigationParams;
     setTitleHeader(params.title as string);
-    loadActivities(params.type ? params.type as string : '')
-      .then(() => setLoading(false));
-  }, [])
+  }, [params.title, setTitleHeader])
+
+  useEffect(() => {
+    if (activityPageQuery.error) {
+      trackError('activity_page_query_error', {
+        message: String(activityPageQuery.error),
+        type: params?.type
+      })
+    }
+  }, [activityPageQuery.error, params?.type])
+
+  const activities = (activityPageQuery.data?.activities as Activity[]) ?? []
+  const lastReservations = (activityPageQuery.data?.lastReservations as Activity[]) ?? []
 
   return (
     <ScrollView style={styles.container}>       

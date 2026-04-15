@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+import { trackError, trackEvent } from './telemetry'
 
 // const api = axios.create({
 //   baseURL: 'https://scania-clube-dev.azurewebsites.net/api'
@@ -45,6 +46,7 @@ interface RetryableRequestConfig extends AxiosRequestConfig {
 let authHandlers: AuthInterceptorHandlers | null = null
 let isRefreshingToken = false
 let pendingRequests: Array<(token: string | null) => void> = []
+const requestStartTimes = new WeakMap<object, number>()
 
 function flushPendingRequests(token: string | null) {
   pendingRequests.forEach(resolve => resolve(token))
@@ -84,11 +86,41 @@ export function configureAuthInterceptors(handlers: AuthInterceptorHandlers) {
   authHandlers = handlers
 }
 
+api.interceptors.request.use(config => {
+  requestStartTimes.set(config as object, Date.now())
+  return config
+})
+
 api.interceptors.response.use(
-  response => response,
+  response => {
+    const requestConfig = response.config as RetryableRequestConfig
+    const startedAt = requestStartTimes.get(response.config as object)
+    const durationMs = startedAt ? Date.now() - startedAt : null
+
+    trackEvent('api_success', {
+      method: requestConfig.method,
+      url: requestConfig.url,
+      status: response.status,
+      durationMs
+    })
+
+    return response
+  },
   async error => {
     const originalRequest = error?.config as RetryableRequestConfig | undefined
     const isUnauthorized = error?.response?.status === 401
+    const startedAt = originalRequest
+      ? requestStartTimes.get(originalRequest as object)
+      : null
+    const durationMs = startedAt ? Date.now() - startedAt : null
+
+    trackError('api_failure', {
+      method: originalRequest?.method,
+      url: originalRequest?.url,
+      status: error?.response?.status,
+      code: error?.code,
+      durationMs
+    })
 
     if (
       isUnauthorized &&
@@ -96,6 +128,7 @@ api.interceptors.response.use(
       !originalRequest._retry &&
       authHandlers
     ) {
+      const currentHandlers = authHandlers
       originalRequest._retry = true
 
       if (isRefreshingToken) {
@@ -119,12 +152,12 @@ api.interceptors.response.use(
 
       try {
         const [storedAccessToken, storedRefreshToken] = await Promise.all([
-          authHandlers.getAccessToken(),
-          authHandlers.getRefreshToken()
+          currentHandlers.getAccessToken(),
+          currentHandlers.getRefreshToken()
         ])
 
         if (!storedRefreshToken) {
-          await authHandlers.onSessionExpired()
+          await currentHandlers.onSessionExpired()
           flushPendingRequests(null)
           return Promise.reject(error)
         }
@@ -134,12 +167,12 @@ api.interceptors.response.use(
         const newRefreshToken = refreshedTokens?.refreshToken ?? storedRefreshToken
 
         if (!newAccessToken) {
-          await authHandlers.onSessionExpired()
+          await currentHandlers.onSessionExpired()
           flushPendingRequests(null)
           return Promise.reject(error)
         }
 
-        await authHandlers.onTokensUpdated(newAccessToken, newRefreshToken)
+        await currentHandlers.onTokensUpdated(newAccessToken, newRefreshToken)
         flushPendingRequests(newAccessToken)
 
         originalRequest.headers = {
@@ -149,7 +182,7 @@ api.interceptors.response.use(
 
         return api(originalRequest)
       } catch (refreshError) {
-        await authHandlers.onSessionExpired()
+        await currentHandlers.onSessionExpired()
         flushPendingRequests(null)
         return Promise.reject(refreshError)
       } finally {

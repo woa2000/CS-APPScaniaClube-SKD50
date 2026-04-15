@@ -27,6 +27,7 @@ import * as eventService from '../../services/events'
 import { useTranslation } from 'react-i18next';
 import { useTrasnlactionDynamic } from '../../languages/translateDB';
 import moment from 'moment'
+import { trackError, trackEvent } from '../../services/telemetry'
 
 
 interface FormProps {
@@ -79,14 +80,28 @@ export function EventReserve() {
       const response = await eventService.createReservation(formData as any)
       
       if (response.result.payable) {
+        trackEvent('event_reserve_payment_required', {
+          eventId: event.id,
+          userId: user?.id
+        })
         navigation.navigate('Payment', { linkPayment: response.result.sandboxInitPoint })
       }
       else {
+        trackEvent('event_reserve_success', {
+          eventId: event.id,
+          userId: user?.id,
+          payable: false
+        })
         Alert.alert('', t('Reserva concluída com sucesso!'), [
           { text: 'OK', onPress: () => navigation.navigate('Events') }
         ] as AlertButton[])
       }
     } catch (error) {
+      trackError('event_reserve_failed', {
+        eventId: event.id,
+        userId: user?.id,
+        message: String(error)
+      })
       Alert.alert(
         t('Erro'), 
         t('Ocorreu um erro ao realizar sua reserva, tente novamente mais tarde.')

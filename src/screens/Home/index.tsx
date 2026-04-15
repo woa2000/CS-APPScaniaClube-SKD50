@@ -22,6 +22,8 @@ import { Card } from '../../components/Card'
 import data from '../../../data.json'
 import { styles } from './styles'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useQuery } from '@tanstack/react-query'
+import { trackError } from '../../services/telemetry'
 
 import { useTranslation } from 'react-i18next';
 import { useTrasnlactionDynamic } from '../../languages/translateDB';
@@ -30,10 +32,7 @@ import { useTrasnlactionDynamic } from '../../languages/translateDB';
 export function Home() {
   const navigation = useNavigation();
   const { user, fileServer } = useAuth();
-  const [loading, setLoading] = useState(true);
-  const [banners, setBanners] = useState<Banner[]>({} as Banner[]);
-  const [likedActivities, setLikedActivities] = useState<LikedActivity[]>({} as LikedActivity[]);
-  const [events, setEvents] = useState<Event[]>([] as Event[]);
+  const userId = user?.id as string;
 
   const {t, i18n} = useTranslation();
   const tDynamic = useTrasnlactionDynamic;
@@ -44,27 +43,37 @@ export function Home() {
 
   const supportedURL = 'https://forms.office.com/pages/responsepage.aspx?id=5GLAO52sF0y03TqtY3_xrJpm7yFIdb1IlQd6R2c_EQ5UMEIwQlhCUE9aQzVWSVA0QjVJOUFBVkVEMy4u';
 
+  const homeQuery = useQuery({
+    queryKey: ['home', userId],
+    queryFn: () => homeService.getHome(userId),
+    enabled: Boolean(userId),
+    staleTime: 2 * 60 * 1000
+  })
 
-  async function loadHome(){
-    try {
-      const response = await homeService.getHome(user?.id as string);
-      const event = await eventService.getLastEvents();
-      setBanners(response.banners as Banner[]);
-      setLikedActivities(response.likedActivities as LikedActivity[]);
-      setEvents(event as Event[]);
-
-    }
-    catch(err) {
-      console.log(err);
-    }
-  }
+  const eventsQuery = useQuery({
+    queryKey: ['home', 'events'],
+    queryFn: () => eventService.getLastEvents(),
+    staleTime: 60 * 1000
+  })
 
   useEffect(() => {
-    loadHome()
-    .then(
-      () => setLoading(false)
-    )
-  }, [])
+    if (homeQuery.error) {
+      trackError('home_query_error', {
+        message: String(homeQuery.error)
+      })
+    }
+
+    if (eventsQuery.error) {
+      trackError('home_events_query_error', {
+        message: String(eventsQuery.error)
+      })
+    }
+  }, [homeQuery.error, eventsQuery.error])
+
+  const loading = homeQuery.isLoading || eventsQuery.isLoading
+  const banners = (homeQuery.data?.banners as Banner[]) ?? []
+  const likedActivities = (homeQuery.data?.likedActivities as LikedActivity[]) ?? []
+  const events = (eventsQuery.data as Event[]) ?? []
 
   return (
     <ScrollView style={styles.container}>

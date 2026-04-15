@@ -16,6 +16,8 @@ import { AuthProvider } from './src/contexts/auth';
 import { Routes } from './src/routes'
 import { useFonts } from 'expo-font'
 import { ErrorBoundary } from './src/components/ErrorBoundary'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './src/services/queryClient'
 
 import './src/languages/i18n'
 
@@ -42,11 +44,13 @@ export default function App() {
   
   return (   
     <ErrorBoundary>
-      <NavigationContainer>
-        <AuthProvider>
-          <Routes />
-        </AuthProvider>
-      </NavigationContainer>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </NavigationContainer>
+      </QueryClientProvider>
     </ErrorBoundary>
       
   )  
