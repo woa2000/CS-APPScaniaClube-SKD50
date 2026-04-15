@@ -1,4 +1,16 @@
 // Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
 
-module.exports = getDefaultConfig(__dirname);
+const config = getDefaultConfig(__dirname);
+
+config.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (moduleName === 'axios') {
+    return {
+      type: 'sourceFile',
+      filePath: require.resolve('axios/dist/browser/axios.cjs'),
+    };
+  }
+  return context.resolveRequest(context, moduleName, platform);
+};
+
+module.exports = config;

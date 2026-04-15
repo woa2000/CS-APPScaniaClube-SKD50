@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": false,
     "name": "Scania Clube",
     "slug": "ScaniaClube",
     "version": "1.1.15",
@@ -21,7 +22,8 @@
       [
         "expo-image-picker"
       ],
-      "expo-font"
+      "expo-font",
+      "expo-asset"
     ],
     "ios": {
       "supportsTablet": true,

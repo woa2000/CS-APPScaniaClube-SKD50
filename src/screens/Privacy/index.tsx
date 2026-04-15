@@ -53,7 +53,7 @@ export function Privacy() {
   const { t, i18n } = useTranslation()
 
   const openLink = () => {
-    const url = 'http://scania-clube-homolog.azurewebsites.net/Privacy';
+    const url = 'http://scania-clube.azurewebsites.net/Home/Policy';
 
     Linking.openURL(url).catch(err => console.error('Erro ao abrir política de privacidade', err));
   };
