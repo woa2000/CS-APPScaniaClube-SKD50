@@ -36,12 +36,16 @@ export function  singInService(username : string, password: string): Promise<JWT
       }) 
     })
     .catch((err) => {
-      Alert.alert('', t(`${err.response?.data?.modelResult?.message[0].message as string}`))
+      const handledMessage = err?.userMessage as string | undefined;
+      const apiMessage = err?.response?.data?.modelResult?.message?.[0]?.message as string | undefined;
+      const fallbackMessage = t('Nao foi possivel realizar login. Tente novamente.');
+
+      Alert.alert('', handledMessage ?? t(`${apiMessage ?? fallbackMessage}`))
       resolve({
         token : null,
         user: null,
         fileServer: null,
-        error: err.response.data
+        error: err?.response?.data ?? handledMessage ?? fallbackMessage
       })
     });
   })      

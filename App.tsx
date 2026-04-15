@@ -15,6 +15,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './src/contexts/auth';
 import { Routes } from './src/routes'
 import { useFonts } from 'expo-font'
+import { ErrorBoundary } from './src/components/ErrorBoundary'
 
 import './src/languages/i18n'
 
@@ -40,11 +41,13 @@ export default function App() {
   // }
   
   return (   
-    <NavigationContainer>
-      <AuthProvider>
-        <Routes />
-      </AuthProvider>    
-    </NavigationContainer>
+    <ErrorBoundary>
+      <NavigationContainer>
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
+      </NavigationContainer>
+    </ErrorBoundary>
       
   )  
 }

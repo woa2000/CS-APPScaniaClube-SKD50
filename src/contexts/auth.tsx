@@ -62,19 +62,33 @@ export const AuthProvider: React.FC = ({children}) => {
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
+    async function clearSession() {
+        await AsyncStorage.multiRemove([
+            '@ClubeScania:token',
+            '@ClubeScania:user',
+            '@ClubeScania:fileServer'
+        ]);
+
+        delete api.defaults.headers.common['Authorization'];
+        setUser(null);
+        setFileServer(null);
+        setHasError(false);
+        setErrorMessage(null);
+        setTitle('');
+    }
+
     async function singIn(username: string, password: string) {
         const response = await auth.singInService(username, password);
         console.log('Login -> ', response)
         if (!response.error) {
-            setAuthorization(response.token as string).then(() => {
-                setUser(response.user);
-                setFileServer(response.fileServer);
-                AsyncStorage.setItem('@ClubeScania:user', JSON.stringify(response.user));
-                AsyncStorage.setItem('@ClubeScania:token', JSON.stringify(response.token));
-                AsyncStorage.setItem('@ClubeScania:fileServer', JSON.stringify(response.fileServer));
+            await setAuthorization(response.token as string);
+            setUser(response.user);
+            setFileServer(response.fileServer);
+            await AsyncStorage.setItem('@ClubeScania:user', JSON.stringify(response.user));
+            await AsyncStorage.setItem('@ClubeScania:token', JSON.stringify(response.token));
+            await AsyncStorage.setItem('@ClubeScania:fileServer', JSON.stringify(response.fileServer));
 
-                updateLanguage(response.user?.idioma ?? 'pt');                
-            })
+            await updateLanguage(response.user?.idioma ?? 'pt');
             
         } else {
             setHasError(true);
@@ -93,10 +107,7 @@ export const AuthProvider: React.FC = ({children}) => {
     }
 
     async function singOut() {
-        await AsyncStorage.removeItem('@ClubeScania:token');
-        await AsyncStorage.removeItem('@ClubeScania:user');
-        await AsyncStorage.removeItem('@ClubeScania:fileServer');
-        setUser(null)
+        await clearSession();
     }
       
     function setTitleHeader(title: string){
