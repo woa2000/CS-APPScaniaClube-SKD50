@@ -37,6 +37,7 @@ import { Exams } from '../screens/Exams'
 import { Language } from '../screens/Language'
 import { Squares } from '../screens/Squares'
 import { Kiosks } from '../screens/Kiosks'
+import { Partnerships } from '../screens/Partnerships'
 import { OtherActivitiesWithoutAppointments } from '../screens/OtherActivitiesWithoutAppointments'
 
 import { useTranslation } from 'react-i18next';
@@ -334,6 +335,14 @@ export function AppRoutes() {
             <Stack.Screen
                 name="OtherActivitys"
                 component={OtherActivitys}
+                options={{
+                    headerShown: false
+                }}
+            />
+
+            <Stack.Screen
+                name="Partnerships"
+                component={Partnerships}
                 options={{
                     headerShown: false
                 }}

@@ -14,9 +14,6 @@ export const Title = styled.Text`
   font-size: 16px;
 `
 
-export const Description = styled.Text`
-  font-family: ${theme.fonts.roboto300};
-  font-size: 14px;
-  line-height: 24px;
+export const Description = styled.View`
   margin: 15px 0px;
 `

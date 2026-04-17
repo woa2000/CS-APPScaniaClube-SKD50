@@ -70,6 +70,35 @@ interface ActivityPage {
   lastReservations: object | null
 }
 
+interface PartnershipType {
+  id: string,
+  description: string,
+  description_EN: string,
+  order?: number,
+}
+
+interface Partnership {
+  id: string,
+  ativo: boolean,
+  nome: string,
+  documento?: string,
+  tipoPessoa?: string,
+  telefone?: string,
+  email?: string,
+  cep?: string,
+  endereco?: string,
+  numero?: string,
+  uf?: string,
+  cidade?: string,
+  bairro?: string,
+  complemento?: string,
+  image?: string,
+  tipo?: PartnershipType,
+  description?: string,
+  description_EN?: string,
+  url?: string,
+}
+
 interface ScheduleDates {
   dates: Date[] | null
 }
@@ -397,6 +426,7 @@ export {
   Activity, 
   LikedActivity, 
   ActivityPage, 
+  PartnershipType,
   ScheduleDates, 
   ScheduleActivity, 
   ModelResult, 
@@ -426,5 +456,6 @@ export {
   ExamNeedActivityProps,
   OperatingRule,
   MonitoringChieldren,
-  ScheduleMonitoring
+  ScheduleMonitoring,
+  Partnership
 };

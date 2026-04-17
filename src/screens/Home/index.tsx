@@ -41,7 +41,7 @@ export function Home() {
     return tDynamic(pt, en, lang);
   };
 
-  const supportedURL = 'https://forms.office.com/pages/responsepage.aspx?id=5GLAO52sF0y03TqtY3_xrJpm7yFIdb1IlQd6R2c_EQ5UMEIwQlhCUE9aQzVWSVA0QjVJOUFBVkVEMy4u';
+  const fallbackSupportedURL = 'https://forms.office.com/pages/responsepage.aspx?id=5GLAO52sF0y03TqtY3_xrJpm7yFIdb1IlQd6R2c_EQ5UMEIwQlhCUE9aQzVWSVA0QjVJOUFBVkVEMy4u';
 
   const homeQuery = useQuery({
     queryKey: ['home', userId],
@@ -56,6 +56,12 @@ export function Home() {
     staleTime: 60 * 1000
   })
 
+  const externalLinkQuery = useQuery({
+    queryKey: ['home', 'external-link'],
+    queryFn: () => homeService.getExternalActivityLink(),
+    staleTime: 5 * 60 * 1000
+  })
+
   useEffect(() => {
     if (homeQuery.error) {
       trackError('home_query_error', {
@@ -68,12 +74,19 @@ export function Home() {
         message: String(eventsQuery.error)
       })
     }
-  }, [homeQuery.error, eventsQuery.error])
+
+    if (externalLinkQuery.error) {
+      trackError('home_external_link_query_error', {
+        message: String(externalLinkQuery.error)
+      })
+    }
+  }, [homeQuery.error, eventsQuery.error, externalLinkQuery.error])
 
   const loading = homeQuery.isLoading || eventsQuery.isLoading
   const banners = (homeQuery.data?.banners as Banner[]) ?? []
   const likedActivities = (homeQuery.data?.likedActivities as LikedActivity[]) ?? []
   const events = (eventsQuery.data as Event[]) ?? []
+  const supportedURL = externalLinkQuery.data || fallbackSupportedURL
 
   return (
     <ScrollView style={styles.container}>
@@ -209,14 +222,7 @@ export function Home() {
             onPress={() => navigation.navigate('Squares', 
               { type: '2', title: 'Quadras' })
             }
-          />
-          {/* <Category
-            urlImage={'https://scania-clube.azurewebsites.net/img/quiosques.jpg'}
-            title={t('Quiosques')}
-            onPress={() => navigation.navigate('Kiosks', 
-              { type: '4', title: 'Quiosques' })
-            }
-          /> */}
+          />         
           <Category
             urlImage={'https://scania-clube.azurewebsites.net/img/quiosques.jpg'}
             title={t('Quiosques')}
@@ -228,6 +234,22 @@ export function Home() {
             title={t('Outras atividades')}
             onPress={() => navigation.navigate('OtherActivitys', 
               { type: '5', title: t('Outras atividades') })
+            }
+          />
+
+          <Category
+            urlImage={'https://scania-clube.azurewebsites.net/img/Parcerias.png'}
+            title={t('Parcerias')}
+            onPress={() => navigation.navigate('Partnerships', 
+              { title: t('Parcerias') })
+            }
+          />
+
+           <Category
+            urlImage={'https://scania-clube.azurewebsites.net/img/eventos.jpg'}
+            title={t('Eventos')}
+            onPress={() => navigation.navigate('Events', 
+              { title: t('Eventos') })
             }
           />
         </View>

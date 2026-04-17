@@ -22,6 +22,7 @@ export function  singInService(username : string, password: string): Promise<JWT
         refresh_token?: string | null
       };
       console.log('jwt ->',  data);
+      
       trackEvent('auth_login_success', {
         hasUser: Boolean(data.user?.id)
       })
@@ -37,7 +38,7 @@ export function  singInService(username : string, password: string): Promise<JWT
           celular : data.user?.celular,
           imgPerfil : data.user?.imgPerfil,
           idioma : data.user?.idioma,
-          policyAccepted: data.user?.policyAccepted,
+          policyAccepted: true, //data.user?.policyAccepted,
           dateAccepted: data.user?.dateAccepted
         },
         fileServer: data.fileServer,

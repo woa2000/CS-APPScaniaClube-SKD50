@@ -19,3 +19,31 @@ export function  getHome(userId: string): Promise<HomeObj> {
     });
   })     
 }
+
+type ExternalLinkResponse = {
+  link?: string
+  url?: string
+  externalLink?: string
+  value?: string
+}
+
+export function getExternalActivityLink(): Promise<string> {
+  return new Promise(resolve => {
+    api.get('Activitys/GetLinkExterno')
+      .then((response) => {
+        const data = response.data as string | ExternalLinkResponse
+
+        if (typeof data === 'string') {
+          resolve(data)
+          return
+        }
+
+        resolve(data.link ?? data.url ?? data.externalLink ?? data.value ?? '')
+      })
+      .catch((err) => {
+        console.error('Ops! ocorreu um erro' + err)
+        Alert.alert('', t(`${err.response?.data?.modelResult?.message[0].message as string}`))
+        resolve('')
+      })
+  })
+}

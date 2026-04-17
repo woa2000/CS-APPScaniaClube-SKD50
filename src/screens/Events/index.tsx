@@ -119,7 +119,7 @@ export function Events() {
         ]}
       > */}
       <BannerActivity 
-        urlImage="https://images.unsplash.com/photo-1440186347098-386b7459ad6b"
+        urlImage="https://scania-clube.azurewebsites.net/img/eventos.jpg"
         title={t("Eventos")}
         showFavorite={false}
         handleLikeActivity={() => handleLikeActivity()}
