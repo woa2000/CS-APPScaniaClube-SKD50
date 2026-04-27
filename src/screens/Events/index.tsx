@@ -7,6 +7,8 @@ import {
   Text,
   ScrollView,
   Dimensions,
+  Linking,
+  Alert,
 } from 'react-native'
 
 import { Event, EventProps } from '../../interfaces/interfaces'
@@ -43,9 +45,31 @@ export function Events() {
     return false
   }
 
+  async function handleEventPress(item: Event) {
+    const eventTitle = td(item.title, item.title_EN)
+    const externalUrl = item.link?.trim()
+
+    console.log('Evento selecionado ->', item)
+
+    if (item.linkExternal && externalUrl) {
+      try {
+        await Linking.openURL(externalUrl)
+        return
+      } catch {
+        Alert.alert('', t('Não foi possível abrir o link do evento'))
+      }
+    }
+
+    ;(navigation as any).navigate('EventDetail', {
+      id: item.id,
+      title: eventTitle,
+    })
+  }
+
   async function loadEvents(userId: string) {
     setLoading(true)
     const response = await eventService.getActiveEvents()
+    console.log('Eventos ativos ->', response)
     const eventsByUserId = await eventService.getEventsByUserId(userId)
     setEvents(response as Event[])
     setLastEvents(eventsByUserId as Event[])
@@ -140,12 +164,7 @@ export function Events() {
                   key={item.id}
                   name={td(item.title, item.title_EN)}
                   urlImage={fileServer + item.image}
-                  onPress={() => navigation.navigate('EventDetail', 
-                    {
-                      id: item.id, 
-                      title: td(item.title, item.title_EN),
-                    }
-                  )}
+                  onPress={() => handleEventPress(item)}
                 />
               ))
             }
@@ -180,10 +199,7 @@ export function Events() {
               key={item.id}
               title={td(item.title, item.title_EN)}
               urlImage={fileServer + item.image}
-              onPress={() => navigation.navigate('EventDetail', {
-                id: item.id, 
-                title: td(item.title, item.title_EN)
-              })}
+              onPress={() => handleEventPress(item)}
             />
           ))
         }

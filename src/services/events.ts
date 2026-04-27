@@ -8,9 +8,27 @@ import { t } from 'i18next';
 export function getActiveEvents() : Promise<Event[]> {
   return new Promise(resolve => {
     api.get('Events/GetActiveEvents')
-    .then((response) => {
+    .then(async (response) => {
       const data = response.data as Event[];
-      resolve(data)
+
+      const eventsWithDetails = await Promise.all(
+        data.map(async (event) => {
+          try {
+            const detailResponse = await api.get('Events/GetEvent/' + event.id)
+            const detailData = detailResponse.data as Event
+
+            return {
+              ...event,
+              ...detailData,
+            }
+          } catch (detailErr) {
+            console.log('event detail error ->', detailErr)
+            return event
+          }
+        })
+      )
+
+      resolve(eventsWithDetails)
     })
     .catch((err) => {
       console.log(err.response);

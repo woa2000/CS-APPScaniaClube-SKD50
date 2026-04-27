@@ -35,16 +35,40 @@ export function getActivityPage(userId: string, type: string): Promise<ActivityP
 export function getActivity(id: string, userid: string): Promise<Activity> {
   return new Promise(resolve => {        
     api.get("Activitys/GetActivityWithUserLiked?id=" + id + "&userId=" + userid)
-    .then((response) => {
+    .then(async (response) => {
       const data = response.data as Activity;
       console.log('activities like ->', data);
+
+      let detailActivities = data.detailActivities;
+
+      try {
+        const detailResponse = await api.get("Activitys/DetailOtherActivities?ActivityId=" + id);
+        const detailData = detailResponse.data as {
+          subTitle?: string,
+          subTitle_EN?: string,
+          description?: string,
+          description_en?: string,
+          description_EN?: string,
+        };
+
+        detailActivities = {
+          subtitle: detailData.subTitle,
+          subtitle_EN: detailData.subTitle_EN,
+          description: detailData.description,
+          description_EN: detailData.description_en ?? detailData.description_EN,
+        };
+      } catch (detailErr) {
+        console.log('detail activity error ->', detailErr);
+      }
+
       resolve({
         id: data.id,
         description: data.description,
         description_EN: data.description_EN,
         image: data.image,
         icon: data.icon,
-        isLiked: data.isLiked
+        isLiked: data.isLiked,
+        detailActivities: detailActivities ?? null,
       }) 
     })
     .catch((err) => {

@@ -55,7 +55,7 @@ interface Activity{
     subtitle_EN?: string,
     description?: string,
     description_EN?: string,
-  }
+  } | null
 }
 
 interface LikedActivity{
@@ -229,6 +229,8 @@ interface Event {
   image: string,
   startEvent: string,
   icon: string,
+  link?: string,
+  linkExternal?: boolean,
 }
 
 interface FormProps {

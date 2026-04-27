@@ -56,8 +56,10 @@ export function OtherActivitiesWithoutAppointments() {
 
 
   async function loadActivity(id: string) {
-    try{
+    try{      
       const response = await activityService.getActivity(id, user?.id as string)
+      console.log('Response Atividade ->', response)
+      console.log('ID Atividade ->', id)
       setActivity(response as Activity);
       setHtmlSource(
         response.detailActivities?.description,
@@ -112,49 +114,6 @@ export function OtherActivitiesWithoutAppointments() {
   return (
     
     <Container>
-      {/* <SkeletonContent
-        containerStyle={{ flex: 1, width: '100%', height: '100%' }}
-        animationDirection="horizontalRight"
-        isLoading={loading}
-        layout={[
-          { 
-            key: 'banner', 
-            width: Dimensions.get('window').width, 
-            height: 297, 
-            marginBottom: 10 
-          },
-          {
-            key: 'searchBar',
-            width: '100%',
-            height: 80,
-            marginBottom: 20,
-          },
-          { 
-            key: 'card', 
-            width: '90%', 
-            height: 80, 
-            marginHorizontal: 20, 
-            marginBottom: 20, 
-            borderRadius: 10 
-          },
-          { 
-            key: 'card2', 
-            width: '90%', 
-            height: 80, 
-            marginHorizontal: 20, 
-            marginBottom: 20, 
-            borderRadius: 10 
-          },
-          { 
-            key: 'card3', 
-            width: '90%', 
-            height: 80, 
-            marginHorizontal: 20, 
-            marginBottom: 20, 
-            borderRadius: 10 
-          }
-        ]}
-      > */}
         <ScrollView>
           <BannerPromotion 
             title={td(
