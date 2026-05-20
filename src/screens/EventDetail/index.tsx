@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 import { useNavigation, useRoute } from '@react-navigation/native'
 // import SkeletonContent from 'react-native-skeleton-content'
 import { Alert, Dimensions, View } from 'react-native'
@@ -146,7 +147,7 @@ export function EventDetail() {
     <Container> 
         <View key={event.id}>
           <BannerPromotion
-            urlImage={fileServer + event.image}
+            urlImage={resolveImageUrl(event.image, fileServer)}
             icon={event.icon}
             title={td(event.title, event.title_EN)}
             subtitle={td(event.subTitle, event.subTitle_EN)}

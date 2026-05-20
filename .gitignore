@@ -70,6 +70,7 @@ buck-out/
 .expo/
 web-build/
 dist/
+.secrets/
 
 # @end expo-cli
 

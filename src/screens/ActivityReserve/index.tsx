@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 //import SkeletonContent from 'react-native-skeleton-content'
 import CalendarStrip from 'react-native-calendar-strip'
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -223,7 +224,7 @@ export function ActivityReserve() {
         <ScrollView>
           <BannerActivity 
             icon={activity.icon}
-            urlImage={fileServer + activity.image}
+            urlImage={resolveImageUrl(activity.image, fileServer)}
             title={td(activity.description, activity.description_EN)}
             isLiked={activity.isLiked}
             handleLikeActivity={() => handleLikeActivity(activity.id as string, activity.isLiked)}

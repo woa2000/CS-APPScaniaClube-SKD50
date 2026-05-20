@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { resolveImageUrl, resolveHtmlImageSources } from '../../utils/imageUrl';
 import { useNavigation, useRoute } from '@react-navigation/native';
 // import SkeletonContent from 'react-native-skeleton-content';
 import { ScrollView, useWindowDimensions } from 'react-native';
@@ -51,7 +52,7 @@ export function OtherActivitiesWithoutAppointments() {
   };
 
   function setHtmlSource(pt?: string, en?: string) {
-    setSource({ html: td(pt ?? '', en ?? '') })
+    setSource({ html: resolveHtmlImageSources(td(pt ?? '', en ?? ''), fileServer) })
   }
 
 
@@ -121,7 +122,7 @@ export function OtherActivitiesWithoutAppointments() {
               activity.description_EN || params.title || ''
             )}
             icon={activity.icon}
-            urlImage={fileServer + (activity.image || params.image || '')}
+            urlImage={resolveImageUrl((activity.image || params.image || ''), fileServer)}
             subtitle={params.subtitle}
             activeOpacity={0.7}
             showButtonBack={true}

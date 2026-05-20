@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 import {
@@ -155,7 +156,7 @@ export function Partnerships() {
               <Category
                 key={partnership.id}
                 title={partnership.nome}
-                urlImage={partnership.image ? fileServer + partnership.image : undefined}
+                urlImage={resolveImageUrl(partnership.image, fileServer)}
                 onPress={() => handleOpenPartnership(partnership)}
               />
             ))}

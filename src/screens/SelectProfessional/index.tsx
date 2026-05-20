@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 import { useNavigation, useRoute } from '@react-navigation/native'
 // import SkeletonContent from 'react-native-skeleton-content'
 import { FlatGrid } from 'react-native-super-grid'
@@ -153,7 +154,7 @@ export function SelectProfessional() {
         ]}
       > */}
         <BannerActivity 
-            urlImage={fileServer + activity.image}
+            urlImage={resolveImageUrl(activity.image, fileServer)}
             icon={activity.icon}
             title={td(activity.description, activity.description_EN)}
             isLiked={activity.isLiked}
@@ -175,7 +176,7 @@ export function SelectProfessional() {
               renderItem={({ item }) => (
                 <AvatarProfessional
                   name={item.nome}
-                  urlImage={fileServer + item.imgPerfil}
+                  urlImage={resolveImageUrl(item.imgPerfil, fileServer)}
                   onPress={() => navigation.navigate('BeautyCenterReserve', { 
                     id: activity.id,
                     provider: {

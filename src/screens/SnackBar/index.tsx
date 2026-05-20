@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 // import SkeletonContent from 'react-native-skeleton-content'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
@@ -133,7 +134,7 @@ export function SnackBar() {
           dishOfDay ? (
             <BannerPromotion 
               title={td(dishOfDay.title, dishOfDay.title_EN)}
-              urlImage={fileServer + dishOfDay.image}
+              urlImage={resolveImageUrl(dishOfDay.image, fileServer)}
               defaultIcon={"coffee"}
               customIconSize={45}
               subtitle={td(dishOfDay.subtitle, dishOfDay.subtitle_EN)}
@@ -145,7 +146,7 @@ export function SnackBar() {
           (
             <BannerPromotion 
               title={snackBar.name}
-              urlImage={fileServer + snackBar.image}
+              urlImage={resolveImageUrl(snackBar.image, fileServer)}
               defaultIcon={"coffee"}
               customIconSize={45}
               subtitle={t('Lanchonete')}
@@ -176,7 +177,7 @@ export function SnackBar() {
                 <Card 
                   key={item.id}
                   name={td(item.title, item.title_EN)}
-                  urlImage={fileServer + item.image}
+                  urlImage={resolveImageUrl(item.image, fileServer)}
                   onPress={() => navigation.navigate('Snack', { id: item.id })}
                 />
               ))

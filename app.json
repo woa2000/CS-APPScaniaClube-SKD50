@@ -3,7 +3,7 @@
     "newArchEnabled": false,
     "name": "Scania Clube",
     "slug": "ScaniaClube",
-    "version": "1.1.21",
+    "version": "1.1.22",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -20,10 +20,27 @@
     ],
     "plugins": [
       [
-        "expo-image-picker"
+        "expo-image-picker",
+        {
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
       ],
       "expo-font",
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
+      ]
     ],
     "ios": {
       "buildNumber": "3",
@@ -32,22 +49,21 @@
       "bundleIdentifier": "com.rasystem.appclubescania",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "O aplicativo precisa do acesso a sua biblioteca de fotos para que você possa alterar a foto de perfil ou enviar novos exames.",
-        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "package": "com.rasystem.appclubescania",
-      "versionCode": 32,
+      "blockedPermissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
-      ]
+      }
     },
     "extra": {
       "eas": {
