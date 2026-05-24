@@ -124,7 +124,7 @@ export function Snack() {
               {t("Informações")}
             </Title>
             <Description>
-              {snack.description}
+              {td(snack.description, snack.description_EN)}
             </Description>
 
             <Price>

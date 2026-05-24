@@ -24,7 +24,7 @@ export const Description = styled.Text`
   font-size: 14px;
   line-height: 24px;
   margin: 15px 0px;
-  color: ${theme.colors.typographyOnyx};
+  color: #000;
 `
 export const Price = styled.Text`
   font-family: ${theme.fonts.roboto700};
