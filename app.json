@@ -49,6 +49,7 @@
       "bundleIdentifier": "com.rasystem.appclubescania",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "O aplicativo precisa do acesso a sua biblioteca de fotos para que você possa alterar a foto de perfil ou enviar novos exames.",
+        "NSContactsUsageDescription": "O aplicativo solicita acesso aos seus contatos para permitir que você compartilhe informações com a equipe de suporte do Clube Scania.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
