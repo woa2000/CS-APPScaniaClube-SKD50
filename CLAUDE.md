@@ -78,7 +78,9 @@ Single axios instance, `baseURL = https://scania-clube.azurewebsites.net/api`, 3
 
 - **`metro.config.js` rewrites `axios` to its browser bundle** (`axios/dist/browser/axios.cjs`). Removing this breaks the app in release builds. Don't "simplify" the resolver without testing release.
 - **`babel.config.js` must keep `react-native-reanimated/plugin` last.** Reanimated breaks silently if reordered.
-- **`patches/styled-components+5.3.11.patch`** is applied via `patch-package` on `postinstall`. After `npm install`, verify the patch applied; otherwise styled-components throws on RN 0.79.
+- **`patches/`** are applied via `patch-package` on `postinstall`. After `npm install`, verify they applied:
+  - `styled-components+5.3.11.patch` — otherwise styled-components throws on RN 0.79.
+  - `react-native-modal+13.0.1.patch` — swaps the removed `BackHandler.removeEventListener` API (gone since RN 0.74) for the subscription `.remove()` API. Without it, unmounting any `AlertCustom`/`react-native-modal` modal crashes on RN 0.79 (e.g. right after login).
 - **Android** blocks legacy storage permissions in `app.json` (`READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, `READ_MEDIA_IMAGES`, `READ_MEDIA_VIDEO`). Use scoped Expo APIs (`expo-image-picker`, `expo-document-picker`, `expo-file-system`); don't add raw `MANAGE_EXTERNAL_STORAGE` flows.
 - **OTA updates** are enabled via `expo-updates` (`runtimeVersion.policy: "appVersion"`). Bumping `expo.version` in `app.json` starts a new runtime channel — a bare JS change without a version bump can be shipped as an OTA; native or `app.json` plugin changes need a new build.
 - **Version management is remote**: `eas.json` has `appVersionSource: "remote"` and `production.autoIncrement: true`. Do not hand-edit Android `versionCode` — let EAS bump it.
@@ -95,4 +97,3 @@ Single axios instance, `baseURL = https://scania-clube.azurewebsites.net/api`, 3
 - `docs/EAS-Play-Store.md` — Play Console / service-account setup, release flows, troubleshooting submission errors.
 - `docs/PRD-Scania-Clube.md`, `docs/SPEC-Scania-Clube.md` — product/feature specs (Portuguese).
 - `e2e/README.md` — Maestro flow inventory.
- 

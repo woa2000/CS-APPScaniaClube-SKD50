@@ -17,15 +17,18 @@ export const ContainerInfo = styled.View`
 export const Title = styled.Text`
   font-family: ${theme.fonts.roboto700};
   font-size: 16px;
+  color: ${theme.colors.typographyOnyx};
 `
 export const Description = styled.Text`
   font-family: ${theme.fonts.roboto300};
   font-size: 14px;
   line-height: 24px;
   margin: 15px 0px;
+  color: #000;
 `
 export const Price = styled.Text`
   font-family: ${theme.fonts.roboto700};
   margin: 15px 0px;
   font-size: 24px;
+  color: ${theme.colors.typographyOnyx};
 `

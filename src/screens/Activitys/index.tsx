@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 import { useNavigation, useRoute } from '@react-navigation/native'
 // import SkeletonContent from 'react-native-skeleton-content'
 
@@ -87,7 +88,7 @@ export function Activitys() {
                 <Card 
                   key={item.id}
                   name={td(item.description, item.description_EN)}
-                  urlImage={fileServer + item.image}
+                  urlImage={resolveImageUrl(item.image, fileServer)}
                   onPress={() => {
                     if(item.needAppointments === false) {
                       navigation.navigate('OtherActivitiesWithoutAppointments', { 
@@ -141,7 +142,7 @@ export function Activitys() {
             <Category
               key={item.id}
               title={td(item.description, item.description_EN)}
-              urlImage={fileServer + item.image}
+              urlImage={resolveImageUrl(item.image, fileServer)}
               onPress={() => {
                 if(item.needAppointments === false) {
                   navigation.navigate('OtherActivitiesWithoutAppointments', { 

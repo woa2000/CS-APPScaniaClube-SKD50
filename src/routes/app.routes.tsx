@@ -125,7 +125,7 @@ export function AppRoutes() {
         <Stack.Navigator screenOptions={{
             headerShown: false
         }}>
-            <Stack.Screen name="Home" component={HomeTabs} />
+            <Stack.Screen name="HomeTabs" component={HomeTabs} />
             <Stack.Screen
                 name="Settings"
                 component={Settings}

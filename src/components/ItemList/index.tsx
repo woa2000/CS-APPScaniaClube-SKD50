@@ -6,6 +6,7 @@ import { styles } from './styles'
 type Props = TouchableOpacityProps & {
   date: string
   title: string
+  subtitle?: string
   showButtonActivity?: boolean
   showButtonCancel?: boolean
   onPressActivity?: () => void
@@ -15,6 +16,7 @@ type Props = TouchableOpacityProps & {
 export function ItemList({ 
   date, 
   title, 
+  subtitle,
   showButtonActivity, 
   showButtonCancel, 
   onPressActivity,
@@ -25,6 +27,14 @@ export function ItemList({
       <View>
         <Text style={styles.date}>{date}</Text>
         <Text style={styles.title}>{title}</Text>
+        {
+          subtitle ? (
+            <View style={styles.subtitleRow}>
+              <Ionicons name="location-outline" size={14} color={'#334856'} />
+              <Text style={styles.subtitle}>{subtitle}</Text>
+            </View>
+          ) : null
+        }
       </View>
       <View style={styles.buttons}>
         {

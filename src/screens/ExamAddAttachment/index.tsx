@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Alert, Modal, Image, ActivityIndicator } from 'react-native';
+import { Alert, Modal, Image } from 'react-native';
 
-import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 
 import { SelectButton } from '../../components/SelectButton';
@@ -39,6 +38,7 @@ export function ExamAddAttachment() {
   const [loading, setLoading] = useState(false);
   const [activityModalOpen, setActivityModalOpen] = useState(false);
   const [image, setImage] = useState('');
+  const [selectedFile, setSelectedFile] = useState<ImageProps | null>(null);
 
    const {t, i18n} = useTranslation();
   const tDynamic = useTrasnlactionDynamic;
@@ -62,28 +62,24 @@ export function ExamAddAttachment() {
   }
 
   async function handleSelectImage() {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const result = await DocumentPicker.getDocumentAsync({
+      type: 'image/*',
+      copyToCacheDirectory: true,
+      multiple: false,
+    });
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-      base64: true,
-      doNotSave: true,
-      allowsEditing: false,
-    })
-
-    if (result.cancelled) {
+    if (result.canceled || !result.assets?.length) {
       return;
     }
-    
-    const { uri: image } = result;
- 
-    setImage(image);
-    
-    if (status !== 'granted') {
-      Alert.alert('', t('Para selecionar uma imagem você precisa conceder permissão.'));
-      return;
-    }
+
+    const asset = result.assets[0];
+
+    setImage(asset.uri);
+    setSelectedFile({
+      uri: asset.uri,
+      name: asset.name,
+      type: asset.mimeType ?? 'image/jpeg',
+    });
   }
   
 
@@ -93,22 +89,16 @@ export function ExamAddAttachment() {
       return;
     }
 
-    if(image === '') {
+    if(!selectedFile) {
       Alert.alert('', t('Selecione uma imagem'));
       return;
     }
-
-    const imageSelected = {
-      name: image.split('/').pop(),
-      uri: image,
-      type: 'image/jpeg',
-    } as any;
 
     const data = new FormData();
 
     data.append('UserId', user?.id as string);
     data.append('ActivitId', activity.id);
-    data.append('MedicalExam', imageSelected);
+    data.append('MedicalExam', selectedFile as any);
    
     try {
       await api.post(`/Activitys/AddMedicalExam`, data)

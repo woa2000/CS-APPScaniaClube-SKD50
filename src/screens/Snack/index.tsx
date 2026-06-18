@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 import { BannerPromotion } from '../../components/BannerPromotion'
 import { ButtonStandard } from '../../components/ButtonStandard'
 
@@ -110,7 +111,7 @@ export function Snack() {
       > */}
         <Content key={snack.id}>
           <BannerPromotion
-            urlImage={fileServer + snack.image}
+            urlImage={resolveImageUrl(snack.image, fileServer)}
             defaultIcon={"cutlery"}
             customIconSize={45}
             title={td(snack.title, snack.title_EN)}
@@ -123,7 +124,7 @@ export function Snack() {
               {t("Informações")}
             </Title>
             <Description>
-              {snack.description}
+              {td(snack.description, snack.description_EN)}
             </Description>
 
             <Price>

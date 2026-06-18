@@ -13,6 +13,8 @@ import {
 import { Alert } from 'react-native';
 import { t } from 'i18next';
 
+let didLogScheduleResponse = false
+
 export function getActivityPage(userId: string, type: string): Promise<ActivityPage> {
   return new Promise(resolve => {        
     api.get("Activitys/GetActivityPage?type=" + type + "&userId=" + userId)
@@ -100,7 +102,28 @@ export function getScheduleActivity(id: string, date: string): Promise<ScheduleA
   return new Promise(resolve => {        
     api.get("Schedules/ListSchedules?activityId=" + id + "&date=" + date)
     .then((response) => {
-      const data = response.data as ScheduleActivity[];
+        if(!didLogScheduleResponse) {
+          console.log('getScheduleActivity raw ->', response.data)
+          didLogScheduleResponse = true
+        }
+      const data = (response.data as any[]).map((item) => ({
+        id: item.id ?? item.Id,
+        vacancies: item.vacancies ?? item.Vacancies,
+        dateLabel: item.dateLabel ?? item.DateLabel,
+        scheduleLabel: item.scheduleLabel ?? item.ScheduleLabel,
+        vacanciesLabel: item.vacanciesLabel ?? item.VacanciesLabel,
+        usesResources: item.usesResources ?? item.UsesResources,
+        resources: (item.resources ?? item.Resources)?.map((resource) => ({
+          id: resource.id ?? resource.Id,
+          name: resource.name ?? resource.Name,
+          order: resource.order ?? resource.Order,
+          isTaken: resource.isTaken ?? resource.IsTaken,
+          takenByUserId: resource.takenByUserId ?? resource.TakenByUserId,
+          takenByUserName: resource.takenByUserName ?? resource.TakenByUserName,
+        })),
+        isScheduled: item.isScheduled ?? item.IsScheduled,
+        sheduledId: item.sheduledId ?? item.SheduledId,
+      })) as ScheduleActivity[];
       resolve(data) 
     })
     .catch((err) => {
@@ -111,11 +134,16 @@ export function getScheduleActivity(id: string, date: string): Promise<ScheduleA
   })     
 }
 
-export function bookingActivity(id: string): Promise<ModelResult> {    
+export function bookingActivity(id: string, activityResourceId?: string): Promise<ModelResult> {    
   return new Promise(resolve => {   
-    const data = {
-      activityScheduleId: id
-    }    
+    const data = activityResourceId
+      ? {
+        activityScheduleId: id,
+        activityResourceId,
+      }
+      : {
+        activityScheduleId: id
+      }
     api.post("Schedules/Create", data, {
       headers: {
         'Content-Type': 'application/json'

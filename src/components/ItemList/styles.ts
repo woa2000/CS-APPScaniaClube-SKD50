@@ -17,6 +17,16 @@ export const styles = StyleSheet.create({
         fontSize: 12,
         color: '#998FA2'
     },
+    subtitle: {
+        fontSize: 12,
+        color: '#334856',
+            marginLeft: 4,
+    },
+        subtitleRow: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 4,
+        },
     buttons:{
         flexDirection: 'row',
     },

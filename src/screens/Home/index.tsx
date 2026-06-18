@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 // import SkeletonContent from 'react-native-skeleton-content'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
@@ -159,7 +160,7 @@ export function Home() {
                 key={item.id}
                 title={td(item.title, item.title_EN)}
                 subtitle={td(item.caption, item.caption_EN)}
-                urlImage={fileServer +  item.mobileImageUrl}
+                urlImage={resolveImageUrl(item.mobileImageUrl, fileServer)}
                 activeOpacity={0.7}
                 onPress={() => {}}
               />
@@ -186,7 +187,7 @@ export function Home() {
                 <Card 
                   key={item.id}
                   name={td(item.description, item.description_EN)}
-                  urlImage={fileServer +  item.image}
+                  urlImage={resolveImageUrl(item.image, fileServer)}
                   onPress={() => navigation.navigate('ActivityReserve', 
                     { id: item.id, title: item.description  })
                   }
@@ -272,7 +273,7 @@ export function Home() {
                 <Card 
                   key={item.id}
                   name={td(item.title, item.title_EN)}
-                  urlImage={fileServer + item.image}
+                  urlImage={resolveImageUrl(item.image, fileServer)}
                   onPress={() => navigation.navigate('EventDetail', {
                     id: item.id, 
                     title: td(item.title, item.title_EN)

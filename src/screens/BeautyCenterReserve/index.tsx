@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 import { useNavigation, useRoute } from '@react-navigation/native'
 // import SkeletonContent from 'react-native-skeleton-content'
 import CalendarStrip from 'react-native-calendar-strip'
@@ -216,7 +217,7 @@ export function BeautyCenterReserve() {
       > */}
         <Content>
           <BannerActivity 
-            urlImage={fileServer + activity.image}
+            urlImage={resolveImageUrl(activity.image, fileServer)}
             icon={activity.icon}
             defaultIcon={"cut"}
             customIconSize={35}
@@ -230,7 +231,7 @@ export function BeautyCenterReserve() {
           <ContentProfessional>
             <AvatarProfessional
               activeOpacity={1}
-              urlImage={fileServer + professional.imgPerfil}
+              urlImage={resolveImageUrl(professional.imgPerfil, fileServer)}
             />
             <ContentInfo>
               <TextInfo>{professional.nome}</TextInfo>

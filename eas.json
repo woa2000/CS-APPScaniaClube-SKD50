@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 0.47.0"
+    "version": ">= 0.47.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -10,9 +11,30 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "autoIncrement": true,
+      "ios": {
+        "image": "latest"
+      }
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "track": "internal"
+      }
+    },
+    "playstore": {
+      "android": {
+        "track": "production",
+        "releaseStatus": "completed"
+      }
+    },
+    "testflight": {
+      "ios": {}
+    },
+    "appstore": {
+      "ios": {}
+    }
   }
 }

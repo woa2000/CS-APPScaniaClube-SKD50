@@ -70,32 +70,31 @@ export function Profile() {
   };
 
   async function handleSelectImage() {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [4, 4],
+      legacy: false,
+      quality: 1,
+    });
 
-    if (status === 'granted') {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        aspect: [4, 4],
-      })
-      
-      if (!result.cancelled) {
-        const filename = `${user?.id}.jpg`;
-        var photo = {
-          uri: result.uri,
-          type: 'image/jpeg',
-          name: filename,
-        };
-
-        try {
-          const response = await userService.editProfileImage(user?.id as string, photo)
-          setImage(result.uri)
-        }
-        catch (error) {
-          Alert.alert(t('Erro ao atualizar foto de perfil'))
-        }
-      }
+    if (result.canceled || !result.assets?.length) {
+      return;
     }
-    
+
+    const asset = result.assets[0];
+    const photo = {
+      uri: asset.uri,
+      type: asset.mimeType ?? 'image/jpeg',
+      name: asset.fileName ?? `${user?.id}.jpg`,
+    };
+
+    try {
+      await userService.editProfileImage(user?.id as string, photo);
+      setImage(asset.uri);
+    } catch (error) {
+      Alert.alert(t('Erro ao atualizar foto de perfil'));
+    }
   }
   
   const { handleChange, handleSubmit, setFieldValue, values } = useFormik<ProfileFormData>({

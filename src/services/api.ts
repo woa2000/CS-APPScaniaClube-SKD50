@@ -14,7 +14,8 @@ import { trackError, trackEvent } from './telemetry'
 // })
 
 // const api = axios.create({
-//   baseURL: 'https://scania-clube-homolog.azurewebsites.net/api'
+//   baseURL: 'https://scania-clube-homolog-linux.azurewebsites.net/api',
+//   timeout: 30000
 // })
 
 const api = axios.create({

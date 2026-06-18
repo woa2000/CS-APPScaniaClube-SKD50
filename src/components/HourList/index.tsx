@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
-import { View, Text, TouchableOpacity, TouchableOpacityProps, Button, Alert } from 'react-native'
+import { View, Text, TouchableOpacityProps, Alert } from 'react-native'
 import { styles } from './styles'
 import { Ionicons } from '@expo/vector-icons';
+import { Dropdown } from 'react-native-element-dropdown';
 import { ButtonBook } from '../../components/ButtonBook'
 import { AlertCustom } from '../AlertCustom';
 import { MonitoringReserve } from '../MonitoringReserve';
 
 import { useTranslation } from 'react-i18next';
-import { useTrasnlactionDynamic } from '../../languages/translateDB';
-import { MonitoringChieldren } from '../../interfaces/interfaces';
+import { ActivityResource, MonitoringChieldren } from '../../interfaces/interfaces';
 
 
 type Props = TouchableOpacityProps & {
@@ -16,34 +16,43 @@ type Props = TouchableOpacityProps & {
   date?: string
   hour?: string
   vacancies?: string
+  usesResources?: boolean
+  resources?: ActivityResource[]
   buttonLoading?: boolean | undefined    
   isScheduled?: boolean
   isMonitoring?: boolean
   handleUpdateChildren?: ({name, age}) => void
-  handleBooking: () => Promise<void>
+  handleBooking: (activityResourceId?: string) => Promise<void>
   handleBookingMentoring: () => Promise<void>
   handleCancel: () => Promise<boolean>
 }
 
-export function HourList({ date, hour, vacancies, buttonLoading, isScheduled, isMonitoring, handleUpdateChildren, ...rest }: Props) {
+export function HourList({ date, hour, vacancies, usesResources, resources, buttonLoading, isScheduled, isMonitoring, handleUpdateChildren, ...rest }: Props) {
   const [loading, setLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isMonitoringVisible, setIsMonitoringVisible] = useState(false)
+  const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null)
   const [lstChildren, setLstChildren] = useState([] as MonitoringChieldren[]);
   
 
-  const {t, i18n} = useTranslation();
-  const tDynamic = useTrasnlactionDynamic;
-  const td = (pt : string, en: string) => {
-    let lang = i18n.language;
-    return tDynamic(pt, en, lang);
-  };
+  const {t} = useTranslation();
 
   
   const messageCancel = t("Deseja realmente cancelar o seu agendamento?")
   const messageMonitoring = t("Informe o nome da criança e a idade e clique em adicionar.")
+  const sortedResources = [...(resources ?? [])].sort((a, b) => a.order - b.order)
+  const resourceOptions = sortedResources.map((resource) => ({
+    label: resource.isTaken ? `${resource.name} (${t('reservado')})` : resource.name,
+    value: resource.id,
+    disabled: resource.isTaken,
+  }))
 
   async function handleSchedule() {
+    if(usesResources && !isScheduled && !selectedResourceId) {
+      Alert.alert('', t('Escolha o espaço desejado'))
+      return
+    }
+
     setLoading(true)
 
     if(isScheduled) {
@@ -51,7 +60,7 @@ export function HourList({ date, hour, vacancies, buttonLoading, isScheduled, is
       setLoading(true)
     }
     else{
-      rest.handleBooking().then(() => setLoading(false))
+      rest.handleBooking(selectedResourceId ?? undefined).then(() => setLoading(false))
     }
   }
 
@@ -85,27 +94,69 @@ export function HourList({ date, hour, vacancies, buttonLoading, isScheduled, is
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.contentInfo}>
-          <View style={styles.row}>
-            <Ionicons name="calendar-outline" style={styles.infoIco} />
-            <Text style={styles.titleInfo}>{date}</Text>
+        <View style={styles.headerRow}>
+          <View style={styles.contentInfo}>
+            <View style={styles.row}>
+              <Ionicons name="calendar-outline" style={styles.infoIco} />
+              <Text style={styles.titleInfo}>{date}</Text>
+            </View>
+            <View style={styles.row}>
+              <Ionicons name="time-outline" style={styles.infoIco} />
+              <Text style={styles.titleInfo}>{hour}</Text>
+            </View>
+            {
+              !usesResources ? (
+                <View style={styles.row}>
+                  <Ionicons name="people-outline" style={styles.infoIco} />
+                  <Text style={styles.titleInfo}>{vacancies}</Text>
+                </View>
+              ) : null
+            }
           </View>
-          <View style={styles.row}>
-            <Ionicons name="time-outline" style={styles.infoIco} />
-            <Text style={styles.titleInfo}>{hour} | </Text>
-            <Ionicons name="people-outline" style={styles.infoIco} />
-            <Text style={styles.titleInfo}>{vacancies}</Text>
-          </View>                    
+
+          <View style={styles.contentButton}>
+            <ButtonBook
+              title= {isScheduled ? t("Cancelar") : t("Agendar")}
+              onPress={isMonitoring ? handleOpenMonitoring : handleSchedule}
+              loading={loading}
+              isSchedule={isScheduled}
+            />
+          </View>
         </View>
 
-        <View style={styles.contentButton}>
-          <ButtonBook
-            title= {isScheduled ? t("Cancelar") : t("Agendar")}
-            onPress={isMonitoring ? handleOpenMonitoring : handleSchedule}
-            loading={loading}
-            isSchedule={isScheduled}
-          />
-        </View>
+        {
+          usesResources ? (
+            <View style={styles.dropdownWrapper}>
+              <Dropdown
+                style={styles.dropdown}
+                containerStyle={styles.dropdownContainer}
+                placeholderStyle={styles.dropdownPlaceholder}
+                selectedTextStyle={styles.dropdownSelectedText}
+                itemTextStyle={styles.dropdownItemText}
+                activeColor="#F3F7FB"
+                data={resourceOptions}
+                labelField="label"
+                valueField="value"
+                placeholder={t('Selecione')}
+                value={selectedResourceId}
+                onChange={(item) => {
+                  if(item.disabled) {
+                    return
+                  }
+
+                  setSelectedResourceId(item.value)
+                }}
+                renderItem={(item) => (
+                  <View style={styles.dropdownItem}>
+                    <Text style={item.disabled ? styles.dropdownItemDisabledText : styles.dropdownItemText}>
+                      {item.label}
+                    </Text>
+                  </View>
+                )}
+              />
+            </View>
+          ) : null
+        }
       </View>
 
       <AlertCustom

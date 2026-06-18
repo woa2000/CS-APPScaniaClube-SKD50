@@ -71,9 +71,10 @@ buck-out/
 .expo/
 web-build/
 dist/
+.secrets/
 
 # @end expo-cli
 
 #Ignorar pastas de projeto nativo para o Prebuild
 ios/
-android/.secrets/play-submit-scania-clube.json
+android/

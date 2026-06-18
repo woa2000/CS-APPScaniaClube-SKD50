@@ -1,0 +1,52 @@
+{
+  "id": "a12acbe7-e9d3-4068-b31e-a00ad73d8fdc",
+  "status": "ERRORED",
+  "platform": "IOS",
+  "error": {
+    "errorCode": "XCODE_BUILD_ERROR",
+    "message": "The \"Run fastlane\" step failed because of an error in the Xcode build process. We automatically detected following errors in your Xcode build logs:\n- call to consteval function 'fmt::basic_format_string<char, fmt::basic_string_view<char> &, const char (&)[3]>::basic_format_string<FMT_COMPILE_STRING, 0>' is not a constant expression\n- call to consteval function 'fmt::basic_format_string<char, const char (&)[7], int &>::basic_format_string<FMT_COMPILE_STRING, 0>' is not a constant expression\n- call to consteval function 'fmt::basic_format_string<char, unsigned int &>::basic_format_string<FMT_COMPILE_STRING, 0>' is not a constant expression\n- call to consteval function 'fmt::basic_format_string<char, unsigned int &>::basic_format_string<FMT_COMPILE_STRING, 0>' is not a constant expression\n- call to consteval function 'fmt::basic_format_string<char, int>::basic_format_string<FMT_COMPILE_STRING, 0>' is not a constant expression\nRefer to \"Xcode Logs\" below for additional, more detailed logs."
+  },
+  "artifacts": {
+    "xcodeBuildLogsUrl": "https://storage.googleapis.com/eas-workflows-production/logs/88d13d94-de13-4c1c-9c0a-9c3576500933/a12acbe7-e9d3-4068-b31e-a00ad73d8fdc/2026-06-17T19%3A04%3A30Z-a12acbe7-e9d3-4068-b31e-a00ad73d8fdc-xcode.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260617%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260617T190643Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=874a05fd6015ae148895bb1ec968c931e876f20d6a433b4cad34fc41dbe5c5c9b89177649751d7d8d76650ab6bb0174ae2ed15a1104b98f6a9a286b0495cd277d068897aeaab53c1a0aa5f12e65155484ae9e2132a049ac4dd8d40e6d343665c6b9fc15f0df6997bf4a95e0a8a6a6b100ae71469b87c85d4171f4a945ad6b3eee983522f7bce1b90c61651f2f9f5187d3af6a3dd64168673b3c826134d55143a93b95207987c520636089189f1716d6a798a940605b3b717eee3df1f91ae2b7eab56a24a782ea7cfdfb7148f5d5f1b8235b3563623452a0430d0fdd0b89147c213205696544a7c8fa052784dd802c19cba3015441c12ec4e64f5621d3448a157"
+  },
+  "fingerprint": {
+    "id": "019ed6bf-4bf5-7ab7-8308-11a69a95b0be",
+    "hash": "be704e28e7efe01ad47674e6e56215f49ac5b5b3"
+  },
+  "initiatingActor": {
+    "id": "e1189374-7f8e-4ad5-ac72-915b8efa7a25",
+    "displayName": "wilson_andrade"
+  },
+  "logFiles": [
+    "https://storage.googleapis.com/eas-workflows-production/logs/88d13d94-de13-4c1c-9c0a-9c3576500933/a12acbe7-e9d3-4068-b31e-a00ad73d8fdc/2026-06-17T19%3A04%3A30Z-a12acbe7-e9d3-4068-b31e-a00ad73d8fdc-xcode.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260617%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260617T190643Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=874a05fd6015ae148895bb1ec968c931e876f20d6a433b4cad34fc41dbe5c5c9b89177649751d7d8d76650ab6bb0174ae2ed15a1104b98f6a9a286b0495cd277d068897aeaab53c1a0aa5f12e65155484ae9e2132a049ac4dd8d40e6d343665c6b9fc15f0df6997bf4a95e0a8a6a6b100ae71469b87c85d4171f4a945ad6b3eee983522f7bce1b90c61651f2f9f5187d3af6a3dd64168673b3c826134d55143a93b95207987c520636089189f1716d6a798a940605b3b717eee3df1f91ae2b7eab56a24a782ea7cfdfb7148f5d5f1b8235b3563623452a0430d0fdd0b89147c213205696544a7c8fa052784dd802c19cba3015441c12ec4e64f5621d3448a157",
+    "https://storage.googleapis.com/eas-workflows-production/logs/88d13d94-de13-4c1c-9c0a-9c3576500933/a12acbe7-e9d3-4068-b31e-a00ad73d8fdc/2026-06-17T19%3A04%3A30Z-f13fe169-69ea-4d1e-9e3b-47b6e88e2957.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260617%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260617T190643Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=479fbe63381034b78826bf79b992c6c0918e8f1ef30d8e98a4ff333650d384b8467bee5fe11aa67a17c9f211807df80b6a402e32e4eccd8b50da115ae0cd8d632120027dbb2025c3800ca71373b2e3868364fa4a0544098cb38b9e5dc60181e0a51c7c3f892c01d914b1f618df4a472db7b96f7cffe0a7df51864b27fef1a1ae67822a91a666d0f09475ddde6654a428198f7c6962e09a834b04299584c04c04bd9a6b497023b9d595ecf544bf9b9af9e59e434c22b1ec18cf988b9c77782fa03e159dcfd3ee0a8e3b5cc1849c35fbb880a362ef51661103ed066b9069381c53fd7eda298487aa1e80d63ea229df6e170ba76d11cc24662047ff4c512d98fdf3"
+  ],
+  "project": {
+    "id": "88d13d94-de13-4c1c-9c0a-9c3576500933",
+    "name": "Scania Clube",
+    "slug": "ScaniaClube",
+    "ownerAccount": {
+      "id": "20db35d7-213e-40d5-aa9e-623fbce9a183",
+      "name": "wilson_andrade"
+    }
+  },
+  "distribution": "STORE",
+  "buildProfile": "production",
+  "sdkVersion": "53.0.0",
+  "appVersion": "1.1.22",
+  "appBuildVersion": "18",
+  "runtimeVersion": "1.1.22",
+  "gitCommitHash": "df34453699236357f76699738ec27da3037622a8",
+  "gitCommitMessage": "fix(ios): adiciona NSContactsUsageDescription no Info.plist\n\nApp Store Connect rejeitou o upload (erro 90683) porque expo-contacts\nestá linkado ao binário e exige a chave de propósito de uso, mesmo que\no app não acione a API em runtime.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+  "priority": "NORMAL",
+  "createdAt": "2026-06-17T19:04:21.970Z",
+  "updatedAt": "2026-06-17T19:06:25.284Z",
+  "completedAt": "2026-06-17T19:06:20.853Z",
+  "expirationDate": "2026-07-17T19:04:22.005Z",
+  "isForIosSimulator": false,
+  "metrics": {
+    "buildWaitTime": 5358,
+    "buildQueueTime": 40733,
+    "buildDuration": 72792
+  }
+}

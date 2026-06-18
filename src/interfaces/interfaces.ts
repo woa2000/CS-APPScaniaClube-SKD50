@@ -103,12 +103,23 @@ interface ScheduleDates {
   dates: Date[] | null
 }
 
+interface ActivityResource {
+  id: string,
+  name: string,
+  order: number,
+  isTaken: boolean,
+  takenByUserId?: string | null,
+  takenByUserName?: string | null,
+}
+
 interface ScheduleActivity {
   id: string,
   vacancies: number,
   dateLabel: string,
   scheduleLabel: string,
   vacanciesLabel: string,
+  usesResources?: boolean,
+  resources?: ActivityResource[],
   isScheduled: boolean,
   sheduledId: string | null
 }
@@ -147,6 +158,7 @@ interface ActivitySchedule {
   startSchedule: string,
   endSchedule: string,
   scheduleLabel: string,
+  resourceName?: string,
 }
 
 interface SpaceSchedule {
@@ -157,6 +169,7 @@ interface SpaceSchedule {
   activityTitle: string,
   activityTitle_EN: string,
   scheduleLabel: string,
+  resourceName?: string,
 }
 
 interface BeautyCenterSchedule {

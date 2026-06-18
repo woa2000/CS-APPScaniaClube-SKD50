@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { resolveImageUrl } from '../../utils/imageUrl';
 // import SkeletonContent from 'react-native-skeleton-content'
 import { useNavigation } from '@react-navigation/native'
 
@@ -121,7 +122,7 @@ export function SnackBarItems() {
               item.itens.map((item) => (
                 <DishCard
                   key={item.id}
-                  image={fileServer + item.image}
+                  image={resolveImageUrl(item.image, fileServer)}
                   titleCard={td(item.title, item.title_EN)}
                   price={`R$ ${item.value}`.slice(0, -3)}
                   onPress={() => navigation.navigate('Snack', { 
