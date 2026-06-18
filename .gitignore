@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+.secrets/
 npm-debug.*
 *.jks
 *.p8
@@ -75,4 +76,4 @@ dist/
 
 #Ignorar pastas de projeto nativo para o Prebuild
 ios/
-android/
+android/.secrets/play-submit-scania-clube.json
