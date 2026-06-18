@@ -105,7 +105,7 @@ export function ActivityReserve() {
     }
   }
 
-  async function handleCheckTerms(activityId: string, hoursId: string, monitoring: boolean) {
+  async function handleCheckTerms(activityId: string, hoursId: string, monitoring: boolean, activityResourceId?: string) {
     await activityService.checkIfNeedsToAcceptRule(activityId, user?.id as string)
       .then((response) => {
         console.log('handleCheckTerms ->',response)
@@ -116,7 +116,7 @@ export function ActivityReserve() {
           {
             handleBookingMentoring(hoursId, schedleChildren)
           } else {
-            handleBooking(hoursId)
+            handleBooking(hoursId, activityResourceId)
           }
         }
       })
@@ -126,9 +126,9 @@ export function ActivityReserve() {
     navigation.navigate('AgreeTermsReserves', { userId, activityId })
   }
 
-  async function handleBooking(id: string) {
+  async function handleBooking(id: string, activityResourceId?: string) {
     try{
-      await activityService.bookingActivity(id).then((response) => {
+      await activityService.bookingActivity(id, activityResourceId).then((response) => {
         if(response.success){
           loadScheduleActivity(activity.id, selected).then((resolve) => {
             setSchedulesActivity(resolve as ScheduleActivity[])
@@ -269,10 +269,12 @@ export function ActivityReserve() {
                   date={schedule.dateLabel}
                   hour={schedule.scheduleLabel}
                   vacancies={schedule.vacanciesLabel}
+                  usesResources={schedule.usesResources}
+                  resources={schedule.resources}
                   isScheduled={schedule.isScheduled}
                   isMonitoring={activity.description.toUpperCase() == 'MONITORIA INFANTIL'}                  
                   buttonLoading={loading}
-                  handleBooking={() => handleCheckTerms(activity.id as string, schedule.id as string, false)}
+                  handleBooking={(resourceId) => handleCheckTerms(activity.id as string, schedule.id as string, false, resourceId)}
                   handleBookingMentoring={() => handleCheckTerms(activity.id as string, schedule.id as string, true)}
                   handleCancel={() => handleCancel(schedule.sheduledId as string)}
                   handleUpdateChildren={({name, age}) => {

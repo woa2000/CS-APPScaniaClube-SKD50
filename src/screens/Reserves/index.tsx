@@ -160,8 +160,9 @@ export function Reserves() {
                     key={item.id}
                     title={td(item.activityTitle, item.activityTitle_EN)}
                     date={item.scheduleLabel}
+                    subtitle={item.resourceName}
                     showButtonCancel={true}
-                    onPress={() => {
+                    onPressCancel={() => {
                       alert()
                       setItemCancel(item.id)
                     }}
@@ -182,8 +183,9 @@ export function Reserves() {
                     key={item.id}
                     title={td(item.activityTitle, item.activityTitle_EN)}
                     date={item.scheduleLabel}
+                    subtitle={item.resourceName}
                     showButtonActivity={true}
-                    onPress={() => {}}
+                    onPressActivity={() => {}}
                   />
                 )}
               />

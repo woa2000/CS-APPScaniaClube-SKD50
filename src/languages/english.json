@@ -103,6 +103,8 @@
         "Procurar" : "Search",
         "Selecionar" : "Select",
         "Selecione" : "Select",
+        "reservado": "reserved",
+        "Escolha o espaço desejado": "Choose the desired space",
         "Aceitar" : "Accept",
         "Sucesso" : "Success",
         "Erro" : "Error",

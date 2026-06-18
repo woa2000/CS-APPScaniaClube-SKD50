@@ -3,24 +3,24 @@ import { theme } from '../../global/styles/theme'
 
 export const styles = StyleSheet.create({
     container: {
-        width: '58%',
-        height: 35,
+        width: '100%',
+        minWidth: 140,
+        height: 44,
         backgroundColor: theme.colors.primaryBlue,
-        borderRadius: 18,
+        borderRadius: 22,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 5,
     },
     containerRed: {
-        width: '58%',
-        height: 35,
+        width: '100%',
+        minWidth: 140,
+        height: 44,
         backgroundColor: theme.colors.primaryRed,
-        borderRadius: 18,
+        borderRadius: 22,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 5,
     },
     title: {
         flex: 1,

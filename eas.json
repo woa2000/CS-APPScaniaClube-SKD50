@@ -29,6 +29,12 @@
         "track": "production",
         "releaseStatus": "completed"
       }
+    },
+    "testflight": {
+      "ios": {}
+    },
+    "appstore": {
+      "ios": {}
     }
   }
 }
