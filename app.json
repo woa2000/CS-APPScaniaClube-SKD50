@@ -3,7 +3,7 @@
     "newArchEnabled": false,
     "name": "Scania Clube",
     "slug": "ScaniaClube",
-    "version": "1.1.24",
+    "version": "1.1.25",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -48,8 +48,8 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.rasystem.appclubescania",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "O aplicativo precisa do acesso a sua biblioteca de fotos para que você possa alterar a foto de perfil ou enviar novos exames.",
-        "NSContactsUsageDescription": "O aplicativo solicita acesso aos seus contatos para permitir que você compartilhe informações com a equipe de suporte do Clube Scania.",
+        "NSPhotoLibraryUsageDescription": "O aplicativo precisa do acesso a sua biblioteca de fotos para que voc\u00ea possa alterar a foto de perfil ou enviar novos exames.",
+        "NSContactsUsageDescription": "O aplicativo solicita acesso aos seus contatos para permitir que voc\u00ea compartilhe informa\u00e7\u00f5es com a equipe de suporte do Clube Scania.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -71,8 +71,6 @@
         "projectId": "88d13d94-de13-4c1c-9c0a-9c3576500933"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    }
+    "runtimeVersion": "1.1.25"
   }
 }

@@ -31,10 +31,14 @@
       }
     },
     "testflight": {
-      "ios": {}
+      "ios": {
+        "ascAppId": "1603506959"
+      }
     },
     "appstore": {
-      "ios": {}
+      "ios": {
+        "ascAppId": "1603506959"
+      }
     }
   }
 }

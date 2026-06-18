@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
-import { Feather } from '@expo/vector-icons'
+import { Feather, Ionicons } from '@expo/vector-icons'
 import { styles } from './styles'
 
 type Props = TouchableOpacityProps & {

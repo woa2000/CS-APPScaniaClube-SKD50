@@ -3,11 +3,19 @@ import { ModelResult, SpaceSchedule } from '../interfaces/interfaces'
 import { Alert } from "react-native";
 import { t } from "i18next";
 
+function mapSpaceSchedule(item: SpaceSchedule & { ResourceName?: string }): SpaceSchedule {
+  return {
+    ...item,
+    resourceName: item.resourceName ?? item.ResourceName,
+  }
+}
+
 export function getScheduledUserSpace(userId: string): Promise<SpaceSchedule[]> {
   return new Promise(resolve => { 
     api.get("Schedules/GetScheduledUserSpace?userId=" + userId)
     .then((response) => {    
-      const data = response.data as SpaceSchedule[];
+      const data = (response.data as (SpaceSchedule & { ResourceName?: string })[])
+        .map(mapSpaceSchedule);
       resolve(data) 
     })
     .catch((err) => {
@@ -22,7 +30,8 @@ export function getRecordUserSchedulesSpace(userId: string): Promise<SpaceSchedu
   return new Promise(resolve => { 
     api.get("Schedules/GetRecordUserSchedulesSpace?userId=" + userId)
     .then((response) => {   
-      const data = response.data as SpaceSchedule[];
+      const data = (response.data as (SpaceSchedule & { ResourceName?: string })[])
+        .map(mapSpaceSchedule);
       resolve(data) 
 
     })
